@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Memory Match — MiniPlay Studio</title>
+<style>
+:root{color-scheme:dark;--bg:#101827;--panel:#19263a;--panel2:#22334c;--ink:#f5f7fb;--muted:#a9b7ca;--accent:#80e0c0;--accent2:#ffc978;--line:#34465f}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,#2b4562 0,#101827 48%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);display:flex;justify-content:center;padding:28px 16px}
+main{width:min(760px,100%)}header{text-align:center;margin:8px 0 22px}.brand{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);font-weight:800}.brand span{color:var(--muted)}h1{font-size:clamp(2rem,6vw,3.3rem);margin:8px 0 6px;letter-spacing:-.05em}.sub{color:var(--muted);margin:0}
+.panel{background:linear-gradient(145deg,#1b2a40,#152135);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 18px 55px #0005}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:16px}.stats{display:flex;gap:9px;flex:1}.stat{background:#0e1929a8;border:1px solid var(--line);border-radius:13px;padding:9px 13px;min-width:84px}.stat small{display:block;color:var(--muted);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em}.stat strong{font-size:1.25rem;font-variant-numeric:tabular-nums}
+.controls{display:flex;gap:8px}button,select{font:inherit}button{border:0;border-radius:12px;padding:11px 15px;font-weight:750;cursor:pointer;transition:transform .15s,filter .15s}button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:focus-visible,select:focus-visible,.card:focus-visible{outline:3px solid var(--accent2);outline-offset:3px}.primary{background:var(--accent);color:#10251f}.secondary{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}select{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:9px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-width:540px;margin:0 auto}.card{aspect-ratio:1;border:1px solid #405674;border-radius:16px;background:linear-gradient(145deg,#2a405e,#1d2d45);color:transparent;display:grid;place-items:center;font-size:clamp(1.6rem,5vw,2.7rem);box-shadow:inset 0 1px #ffffff18,0 5px 12px #0002;user-select:none}.card::before{content:"✦";color:#8ca4c2;font-size:clamp(1.4rem,4vw,2rem)}.card.flipped,.card.matched{background:linear-gradient(145deg,#f7f3e9,#dce9e5);color:#172337;border-color:#dce9e5}.card.flipped::before,.card.matched::before{content:none}.card.matched{box-shadow:0 0 0 2px var(--accent) inset;opacity:.78}.card:disabled{cursor:default}.message{text-align:center;color:var(--muted);min-height:26px;margin:16px 0 0}.message strong{color:var(--accent)}.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.8rem;margin:14px 3px 0}.overlay{position:fixed;inset:0;background:#07101dcc;display:grid;place-items:center;padding:20px}.modal{width:min(420px,100%);background:#1b2a40;border:1px solid var(--line);border-radius:22px;padding:28px;text-align:center;box-shadow:0 25px 90px #0009}.modal h2{font-size:2rem;margin:5px}.modal p{color:var(--muted);line-height:1.5}.hidden{display:none!important}
+@media(max-width:480px){body{padding:18px 10px}.panel{padding:12px;border-radius:18px}.toolbar{align-items:stretch}.stats{width:100%}.stat{flex:1;min-width:0;padding:8px}.controls{width:100%}.controls button{flex:1}.grid{gap:7px}.card{border-radius:12px}.footer{font-size:.72rem}}
+</style>
+</head>
+<body>
+<main>
+<header><div class="brand">MINIPLAY <span>STUDIO</span></div><h1>Memory Match</h1><p class="sub">Flip the cards. Find every matching pair.</p></header>
+<section class="panel" aria-label="Memory matching game">
+  <div class="toolbar">
+    <div class="stats">
+      <div class="stat"><small>Moves</small><strong id="moves">0</strong></div>
+      <div class="stat"><small>Time</small><strong id="time">00:00</strong></div>
+      <div class="stat"><small>Best</small><strong id="best">—</strong></div>
+    </div>
+    <div class="controls">
+      <select id="difficulty" aria-label="Difficulty"><option value="easy">Easy · 6 pairs</option><option value="normal" selected>Normal · 8 pairs</option><option value="hard">Hard · 10 pairs</option></select>
+      <button class="secondary" id="restart" type="button">↻ Restart</button>
+    </div>
+  </div>
+  <div class="grid" id="grid" aria-label="Game cards"></div>
+  <p class="message" id="message" aria-live="polite">Find all 8 pairs to win. Good luck!</p>
+  <div class="footer"><span>MiniPlay Studio · Game 001</span><span>Made for desktop & mobile</span></div>
+</section>
+</main>
+<div class="overlay" id="welcome">
+ <div class="modal"><div class="brand">READY WHEN YOU ARE</div><h2>Let's play!</h2><p>Match all the emoji pairs in as few moves and as little time as possible.</p><button class="primary" id="start" type="button">Start game</button></div>
+</div>
+<div class="overlay hidden" id="win">
+ <div class="modal"><div class="brand">LEVEL COMPLETE</div><h2>🎉 You did it!</h2><p id="result"></p><button class="primary" id="again" type="button">Play again</button></div>
+</div>
+<script>
+(() => {
+ const symbols=['🍓','🚀','🐼','🌈','🎸','🍕','🦋','⚽','🌻','🧩'];
+ const grid=document.querySelector('#grid'),movesEl=document.querySelector('#moves'),timeEl=document.querySelector('#time'),bestEl=document.querySelector('#best'),message=document.querySelector('#message'),difficulty=document.querySelector('#difficulty');
+ const welcome=document.querySelector('#welcome'),win=document.querySelector('#win'),result=document.querySelector('#result');
+ let deck=[],first=null,locked=false,moves=0,matches=0,seconds=0,timer=null,started=false;
+ const bestKey=()=>`miniplay-memory-best-${difficulty.value}`;
+ const format=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+ function updateBest(){const b=localStorage.getItem(bestKey());bestEl.textContent=b===null?'—':b;}
+ function startClock(){if(timer)return;timer=setInterval(()=>{seconds++;timeEl.textContent=format(seconds)},1000)}
+ function makeGame(showWelcome=false){
+   clearInterval(timer);timer=null;started=false;first=null;locked=false;moves=0;matches=0;seconds=0;
+   movesEl.textContent='0';timeEl.textContent='00:00';message.textContent=`Find all ${pairCount()} pairs. Good luck!`;updateBest();
+   const chosen=symbols.slice(0,pairCount());deck=[...chosen,...chosen].sort(()=>Math.random()-.5);grid.innerHTML='';
+   grid.style.gridTemplateColumns=`repeat(${deck.length===12?4:5},minmax(0,1fr))`;
+   deck.forEach((symbol,index)=>{const b=document.createElement('button');b.type='button';b.className='card';b.textContent=symbol;b.setAttribute('aria-label',`Hidden card ${index+1}`);b.dataset.symbol=symbol;b.addEventListener('click',()=>flip(b));grid.appendChild(b)});
+   win.classList.add('hidden');if(showWelcome)welcome.classList.remove('hidden');
+ }
+ function pairCount(){return difficulty.value==='easy'?6:difficulty.value==='hard'?10:8}
+ function flip(card){
+   if(locked||card.classList.contains('flipped')||card.classList.contains('matched'))return;
+   if(!started){started=true;startClock()}
+   card.classList.add('flipped');card.setAttribute('aria-label',`Card ${card.dataset.symbol}`);
+   if(!first){first=card;return}
+   moves++;movesEl.textContent=moves;const second=card;
+   if(first.dataset.symbol===second.dataset.symbol){
+     first.classList.add('matched');second.classList.add('matched');first.disabled=true;second.disabled=true;matches++;first=null;
+     message.innerHTML='<strong>Nice match!</strong> Keep going.';
+     if(matches===pairCount())finish();
+   }else{
+     locked=true;const previous=first;first=null;message.textContent='Not a match. Try again!';
+     setTimeout(()=>{previous.classList.remove('flipped');second.classList.remove('flipped');previous.setAttribute('aria-label','Hidden card');second.setAttribute('aria-label','Hidden card');locked=false},750);
+   }
+ }
+ function finish(){
+   clearInterval(timer);timer=null;const old=localStorage.getItem(bestKey());let record=false;
+   if(old===null||moves<Number(old)){localStorage.setItem(bestKey(),String(moves));record=true}
+   updateBest();result.textContent=`You found every pair in ${moves} moves and ${format(seconds)}.${record?' That is your new best score!':''}`;
+   win.classList.remove('hidden');message.innerHTML='<strong>All pairs found!</strong> Great job.';
+ }
+ document.querySelector('#start').addEventListener('click',()=>{welcome.classList.add('hidden')});
+ document.querySelector('#restart').addEventListener('click',()=>makeGame(false));
+ document.querySelector('#again').addEventListener('click',()=>makeGame(false));
+ difficulty.addEventListener('change',()=>makeGame(false));
+ makeGame(true);
+})();
+</script>
+</body>
+</html>
