@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="Play free quick browser games at MiniPlay Studio. Try puzzles, memory challenges and casual games on desktop or mobile.">
+  <title>MiniPlay Studio — Free Online Mini Games</title>
+  <style>
+    :root{--bg:#0d1523;--surface:#151f30;--surface2:#1d2b40;--line:#2b3d56;--text:#f4f7fb;--muted:#a6b4c8;--mint:#83e2c2;--gold:#ffd18a;--purple:#b8a5ff;--radius:20px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 70% -20%,#263e5c 0,transparent 45%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5}
+    a{color:inherit;text-decoration:none}button,input{font:inherit}.wrap{width:min(1160px,calc(100% - 40px));margin:auto}
+    .topbar{position:sticky;top:0;z-index:5;background:#0d1523eF;backdrop-filter:blur(14px);border-bottom:1px solid #ffffff12}.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-.04em;font-size:1.15rem}.brand-mark{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--mint),#62b7d9);display:grid;place-items:center;color:#10251f;font-size:1.2rem}
+    .brand span{color:var(--mint)}.navlinks{display:flex;align-items:center;gap:25px;color:var(--muted);font-size:.92rem}.navlinks a:hover{color:var(--text)}.nav-cta{background:var(--mint);color:#10251f;padding:10px 16px;border-radius:12px;font-weight:800}
+    .hero{padding:74px 0 50px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:42px}.eyebrow{color:var(--mint);font-size:.76rem;font-weight:850;letter-spacing:.17em;text-transform:uppercase}.hero h1{font-size:clamp(2.7rem,6vw,5.1rem);line-height:.99;letter-spacing:-.065em;margin:15px 0 18px;max-width:700px}.hero h1 em{font-style:normal;color:var(--mint)}.hero p{color:var(--muted);font-size:1.08rem;max-width:550px;margin:0 0 25px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;padding:13px 19px;border-radius:13px;font-weight:850;border:1px solid transparent}.btn-primary{background:var(--mint);color:#10251f}.btn-secondary{border-color:var(--line);background:#ffffff08}.hero-art{min-height:300px;position:relative;display:grid;place-items:center}.orb{width:min(330px,75vw);aspect-ratio:1;border-radius:34%;transform:rotate(-9deg);background:linear-gradient(145deg,#263c58,#17283d);border:1px solid #ffffff1a;box-shadow:0 30px 80px #0007;display:grid;place-items:center;position:relative}.orb:before,.orb:after{content:"";position:absolute;border:1px solid #83e2c244;border-radius:50%;inset:18px}.orb:after{inset:42px;border-color:#ffd18a44}.emoji-cloud{font-size:clamp(2rem,5vw,3.5rem);letter-spacing:12px;line-height:1.7;text-align:center;transform:rotate(9deg);max-width:260px}.float-tag{position:absolute;padding:10px 14px;border-radius:13px;background:#1d2b40;border:1px solid var(--line);box-shadow:0 10px 25px #0005;font-size:.85rem;font-weight:800}.tag-one{top:12%;right:0;color:var(--gold)}.tag-two{bottom:12%;left:0;color:var(--mint)}
+    .stats{display:flex;gap:35px;flex-wrap:wrap;border-top:1px solid #ffffff14;padding-top:24px}.stats strong{display:block;font-size:1.3rem}.stats span{color:var(--muted);font-size:.8rem}
+    section{padding:44px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px}.section-head h2{font-size:clamp(1.7rem,4vw,2.35rem);letter-spacing:-.045em;margin:5px 0 0}.section-head p{margin:0;color:var(--muted);font-size:.92rem}
+    .tools{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}.search{flex:1;min-width:220px;position:relative}.search input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:13px 15px 13px 43px;color:var(--text);outline:none}.search input:focus{border-color:var(--mint)}.search:before{content:"⌕";position:absolute;left:15px;top:7px;font-size:1.6rem;color:var(--muted)}.filters{display:flex;gap:8px;flex-wrap:wrap}.filter{border:1px solid var(--line);background:var(--surface);color:var(--muted);padding:10px 14px;border-radius:12px;cursor:pointer}.filter.active,.filter:hover{background:#83e2c21a;color:var(--mint);border-color:#83e2c266}
+    .game-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.game-card{background:linear-gradient(155deg,#1b2a3f,#141f30);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .2s,border-color .2s}.game-card:hover{transform:translateY(-4px);border-color:#83e2c277}.game-art{height:178px;display:grid;place-items:center;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 40%,#3c5976,#1a2b41 70%)}.game-art .art-emoji{font-size:4.3rem;filter:drop-shadow(0 12px 12px #0005)}.game-art.purple{background:radial-gradient(circle at 50% 40%,#564b83,#25223f 72%)}.game-art.orange{background:radial-gradient(circle at 50% 40%,#80543c,#382a2b 72%)}.game-art.blue{background:radial-gradient(circle at 50% 40%,#386c80,#1b3347 72%)}.pill{position:absolute;top:13px;left:13px;padding:5px 9px;border-radius:99px;background:#0d1523c9;border:1px solid #ffffff20;font-size:.7rem;font-weight:800;color:var(--mint)}.game-info{padding:17px}.game-info h3{margin:0 0 5px;font-size:1.12rem}.game-info p{margin:0 0 15px;color:var(--muted);font-size:.86rem;min-height:42px}.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}.meta{color:var(--muted);font-size:.76rem}.play{background:var(--mint);color:#10251f;border-radius:10px;padding:9px 13px;font-size:.82rem;font-weight:900}.coming{background:var(--surface2);color:var(--muted);cursor:not-allowed}
+    .empty{display:none;text-align:center;padding:35px;color:var(--muted);border:1px dashed var(--line);border-radius:16px}.banner{display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;background:linear-gradient(110deg,#1b3b45,#202d48);border:1px solid #83e2c244;border-radius:22px;padding:28px 30px}.banner h2{margin:0 0 5px;font-size:1.5rem}.banner p{margin:0;color:var(--muted);font-size:.9rem}.banner a{white-space:nowrap}
+    .about-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.about-item{padding:20px;background:var(--surface);border:1px solid var(--line);border-radius:16px}.about-item b{display:block;margin:9px 0 4px}.about-item p{color:var(--muted);font-size:.85rem;margin:0}.about-icon{font-size:1.5rem}
+    footer{border-top:1px solid #ffffff14;margin-top:35px;padding:27px 0 38px;color:var(--muted);font-size:.83rem}.foot{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.footlinks{display:flex;gap:18px;flex-wrap:wrap}
+    @media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:52px;gap:12px}.hero-art{min-height:260px}.game-grid{grid-template-columns:repeat(2,1fr)}.about-grid{grid-template-columns:1fr}.navlinks{gap:13px}}
+    @media(max-width:540px){.wrap{width:min(100% - 28px,1160px)}.nav{height:62px}.navlinks a:not(.nav-cta){display:none}.hero{padding:42px 0 28px}.hero-art{min-height:220px}.orb{width:220px}.emoji-cloud{font-size:2.2rem;letter-spacing:7px}.stats{gap:22px}.game-grid{grid-template-columns:1fr}.game-art{height:160px}.section-head{align-items:start;flex-direction:column}.banner{grid-template-columns:1fr;padding:23px}.banner a{justify-self:start}.filters{width:100%}.filter{flex:1}.tools{gap:9px}}
+  </style>
+</head>
+<body>
+<header class="topbar"><div class="wrap nav">
+  <a class="brand" href="#" aria-label="MiniPlay Studio home"><span class="brand-mark">✦</span> MiniPlay <span>Studio</span></a>
+  <nav class="navlinks" aria-label="Main navigation"><a href="#games">Games</a><a href="#about">About</a><a class="nav-cta" href="#games">Play now ↗</a></nav>
+</div></header>
+<main>
+  <div class="wrap">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Quick games. Good breaks.</div>
+        <h1>A little play goes a <em>long way.</em></h1>
+        <p>Take a quick break with simple, satisfying mini games. Play instantly in your browser — no downloads, no fuss.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="#games">Explore games&nbsp; →</a><a class="btn btn-secondary" href="#about">About MiniPlay</a></div>
+        <div class="stats"><div><strong>Instant</strong><span>Browser play</span></div><div><strong>Any screen</strong><span>Desktop & mobile</span></div><div><strong>Free</strong><span>To get started</span></div></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="orb"><div class="emoji-cloud">🧩 🎮<br>🌈 🚀</div></div><div class="float-tag tag-one">✦ Brain break</div><div class="float-tag tag-two">♡ Pick-up & play</div></div>
+    </section>
+    <section id="games">
+      <div class="section-head"><div><div class="eyebrow">The game room</div><h2>Find your next favorite</h2></div><p>Small games, big replay energy.</p></div>
+      <div class="tools">
+        <label class="search"><input id="search" type="search" placeholder="Search games..." aria-label="Search games"></label>
+        <div class="filters" aria-label="Filter games"><button class="filter active" data-filter="all">All games</button><button class="filter" data-filter="puzzle">Puzzle</button><button class="filter" data-filter="arcade">Arcade</button><button class="filter" data-filter="classic">Classic</button></div>
+      </div>
+      <div class="game-grid" id="gameGrid">
+        <article class="game-card" data-category="puzzle" data-name="memory match cards brain">
+          <div class="game-art"><span class="pill">PLAY NOW</span><span class="art-emoji">🧠</span></div>
+          <div class="game-info"><h3>Memory Match</h3><p>Flip the cards, find every pair and beat your best score.</p><div class="card-bottom"><span class="meta">Puzzle · 1 player</span><a class="play" href="games/memory-match/">Play game ↗</a></div></div>
+        </article>
+        <article class="game-card" data-category="arcade" data-name="snake arcade">
+          <div class="game-art purple"><span class="pill">COMING SOON</span><span class="art-emoji">🐍</span></div>
+          <div class="game-info"><h3>Snake Rush</h3><p>Collect, grow and see how long you can survive.</p><div class="card-bottom"><span class="meta">Arcade · 1 player</span><span class="play coming">Coming soon</span></div></div>
+        </article>
+        <article class="game-card" data-category="classic" data-name="tic tac toe strategy">
+          <div class="game-art orange"><span class="pill">COMING SOON</span><span class="art-emoji">⭕</span></div>
+          <div class="game-info"><h3>Tic-Tac-Toe</h3><p>A timeless little battle. Can you outsmart the computer?</p><div class="card-bottom"><span class="meta">Classic · 1–2 players</span><span class="play coming">Coming soon</span></div></div>
+        </article>
+        <article class="game-card" data-category="puzzle" data-name="number merge 2048">
+          <div class="game-art blue"><span class="pill">COMING SOON</span><span class="art-emoji">🔢</span></div>
+          <div class="game-info"><h3>Number Merge</h3><p>Combine matching tiles and chase the highest number.</p><div class="card-bottom"><span class="meta">Puzzle · 1 player</span><span class="play coming">Coming soon</span></div></div>
+        </article>
+        <article class="game-card" data-category="arcade" data-name="star catcher runner">
+          <div class="game-art orange"><span class="pill">COMING SOON</span><span class="art-emoji">⭐</span></div>
+          <div class="game-info"><h3>Star Catcher</h3><p>Dodge obstacles, collect stars and beat your high score.</p><div class="card-bottom"><span class="meta">Arcade · 1 player</span><span class="play coming">Coming soon</span></div></div>
+        </article>
+        <article class="game-card" data-category="classic" data-name="rock paper scissors">
+          <div class="game-art purple"><span class="pill">COMING SOON</span><span class="art-emoji">✊</span></div>
+          <div class="game-info"><h3>Rock Paper Scissors</h3><p>A quick classic. Choose your move and challenge the CPU.</p><div class="card-bottom"><span class="meta">Classic · 1 player</span><span class="play coming">Coming soon</span></div></div>
+        </article>
+      </div>
+      <div class="empty" id="empty">No games found. Try another search or category.</div>
+    </section>
+    <section>
+      <div class="banner"><div><h2>Got five minutes?</h2><p>Start with Memory Match — our first mini game is ready to play.</p></div><a class="btn btn-primary" href="games/memory-match/">Play Memory Match →</a></div>
+    </section>
+    <section id="about">
+      <div class="section-head"><div><div class="eyebrow">Why MiniPlay</div><h2>Made for the little breaks</h2></div></div>
+      <div class="about-grid">
+        <div class="about-item"><div class="about-icon">⚡</div><b>Instant play</b><p>Jump into a game right in your browser. No app install needed.</p></div>
+        <div class="about-item"><div class="about-icon">📱</div><b>Fits your screen</b><p>Responsive layouts designed for phones, tablets and desktops.</p></div>
+        <div class="about-item"><div class="about-icon">✨</div><b>Simple and fun</b><p>Easy-to-learn games for a quick, cheerful challenge.</p></div>
+      </div>
+    </section>
+  </div>
+</main>
+<footer><div class="wrap foot"><span>© <span id="year"></span> MiniPlay Studio. Made for play.</span><div class="footlinks"><a href="about.html">About</a><a href="contact.html">Contact</a><a href="privacy-policy.html">Privacy</a></div></div></footer>
+<script>
+  document.querySelector('#year').textContent = new Date().getFullYear();
+  const search = document.querySelector('#search');
+  const cards = [...document.querySelectorAll('.game-card')];
+  const filters = [...document.querySelectorAll('.filter')];
+  const empty = document.querySelector('#empty');
+  let active = 'all';
+  function updateGames(){
+    const q = search.value.trim().toLowerCase();
+    let shown = 0;
+    cards.forEach(card=>{
+      const matchesText = card.dataset.name.includes(q) || card.innerText.toLowerCase().includes(q);
+      const matchesCategory = active === 'all' || card.dataset.category === active;
+      const visible = matchesText && matchesCategory;
+      card.hidden = !visible;
+      if(visible) shown++;
+    });
+    empty.style.display = shown ? 'none' : 'block';
+  }
+  search.addEventListener('input',updateGames);
+  filters.forEach(button=>button.addEventListener('click',()=>{
+    active=button.dataset.filter;
+    filters.forEach(item=>item.classList.toggle('active',item===button));
+    updateGames();
+  }));
+</script>
+</body>
+</html>
