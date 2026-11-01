@@ -109,42 +109,45 @@ a,button,[role="button"]{-webkit-tap-highlight-color:transparent}
 }
 
 
-/* Memory Match iOS Safari rendering and touch-state fix */
-#grid .card {
+
+
+/* Memory Match: reliable direct-text card rendering across mobile and desktop browsers */
+.grid button.card,
+.grid button.card:focus,
+.grid button.card:active {
   -webkit-appearance: none !important;
   appearance: none !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  display: grid !important;
+  place-items: center !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
   padding: 0 !important;
   line-height: 1 !important;
   text-align: center !important;
+  font-family: "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif !important;
+  font-size: clamp(1.6rem,5vw,2.7rem) !important;
+  color: #8ca4c2 !important;
+  -webkit-text-fill-color: #8ca4c2 !important;
+  background: linear-gradient(145deg,#2a405e,#1d2d45) !important;
+  border: 1px solid #405674 !important;
+  overflow: hidden !important;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  background: linear-gradient(145deg,#2a405e,#1d2d45) !important;
-  color: transparent !important;
-  overflow: hidden;
+  user-select: none;
 }
-#grid .card::before {
-  content: "✦" !important;
-  display: block !important;
-  color: #8ca4c2 !important;
-}
-#grid .card.flipped,
-#grid .card.matched {
-  background: linear-gradient(145deg,#f7f3e9,#dce9e5) !important;
+.grid button.card::before { content: none !important; display: none !important; }
+.grid button.card.flipped,
+.grid button.card.matched {
   color: #172337 !important;
+  -webkit-text-fill-color: #172337 !important;
+  background: linear-gradient(145deg,#f7f3e9,#dce9e5) !important;
   border-color: #dce9e5 !important;
 }
-#grid .card.flipped::before,
-#grid .card.matched::before {
-  content: none !important;
-  display: none !important;
-}
-#grid .card.matched {
+.grid button.card.matched {
   box-shadow: 0 0 0 2px #087f70 inset !important;
   opacity: 1 !important;
 }
+.grid button.card:disabled { cursor: default; }
 
 </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6336230992663277"
@@ -203,14 +206,23 @@ a,button,[role="button"]{-webkit-tap-highlight-color:transparent}
    movesEl.textContent='0';timeEl.textContent='00:00';message.textContent=`Find all ${pairCount()} pairs. Good luck!`;updateBest();
    const chosen=symbols.slice(0,pairCount());deck=[...chosen,...chosen].sort(()=>Math.random()-.5);grid.innerHTML='';
    grid.style.gridTemplateColumns=`repeat(${deck.length===12?4:5},minmax(0,1fr))`;
-   deck.forEach((symbol,index)=>{const b=document.createElement('button');b.type='button';b.className='card';b.textContent=symbol;b.setAttribute('aria-label',`Hidden card ${index+1}`);b.dataset.symbol=symbol;b.addEventListener('click',()=>flip(b));grid.appendChild(b)});
+   deck.forEach((symbol,index)=>{
+     const b=document.createElement('button');
+     b.type='button';
+     b.className='card';
+     b.textContent='✦';
+     b.setAttribute('aria-label',`Hidden card ${index+1}`);
+     b.dataset.symbol=symbol;
+     b.addEventListener('click',()=>flip(b));
+     grid.appendChild(b);
+   });
    win.classList.add('hidden');if(showWelcome)welcome.classList.remove('hidden');
  }
  function pairCount(){return difficulty.value==='easy'?6:difficulty.value==='hard'?10:8}
  function flip(card){
    if(locked||card.classList.contains('flipped')||card.classList.contains('matched'))return;
    if(!started){started=true;startClock()}
-   card.classList.add('flipped');card.setAttribute('aria-label',`Card ${card.dataset.symbol}`);
+   card.classList.add('flipped');card.textContent=card.dataset.symbol;card.setAttribute('aria-label',`Card ${card.dataset.symbol}`);
    if(!first){first=card;return}
    moves++;movesEl.textContent=moves;const second=card;
    if(first.dataset.symbol===second.dataset.symbol){
@@ -223,14 +235,14 @@ a,button,[role="button"]{-webkit-tap-highlight-color:transparent}
      clearTimeout(mismatchTimer);
      mismatchTimer=setTimeout(()=>{
        if(thisRound!==roundId)return;
-       [previous,second].forEach(card=>{
+       [previous,second].forEach((card)=>{
          card.classList.remove('flipped');
+         card.textContent='✦';
          card.setAttribute('aria-label','Hidden card');
-         card.blur();
        });
        locked=false;
        mismatchTimer=null;
-     },1200);
+     },1000);
    }
  }
  function finish(){
