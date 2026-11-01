@@ -108,6 +108,44 @@ a,button,[role="button"]{-webkit-tap-highlight-color:transparent}
   .stats,.bar,.controls,.actions{flex-wrap:wrap}
 }
 
+
+/* Memory Match iOS Safari rendering and touch-state fix */
+#grid .card {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  background: linear-gradient(145deg,#2a405e,#1d2d45) !important;
+  color: transparent !important;
+  overflow: hidden;
+}
+#grid .card::before {
+  content: "✦" !important;
+  display: block !important;
+  color: #8ca4c2 !important;
+}
+#grid .card.flipped,
+#grid .card.matched {
+  background: linear-gradient(145deg,#f7f3e9,#dce9e5) !important;
+  color: #172337 !important;
+  border-color: #dce9e5 !important;
+}
+#grid .card.flipped::before,
+#grid .card.matched::before {
+  content: none !important;
+  display: none !important;
+}
+#grid .card.matched {
+  box-shadow: 0 0 0 2px #087f70 inset !important;
+  opacity: 1 !important;
+}
+
 </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6336230992663277"
      crossorigin="anonymous"></script>
@@ -182,7 +220,17 @@ a,button,[role="button"]{-webkit-tap-highlight-color:transparent}
    }else{
      locked=true;const previous=first;first=null;message.textContent='Not a match. Try again!';
      const thisRound=roundId;
-     mismatchTimer=setTimeout(()=>{if(thisRound!==roundId)return;previous.classList.remove('flipped');second.classList.remove('flipped');previous.setAttribute('aria-label','Hidden card');second.setAttribute('aria-label','Hidden card');locked=false;mismatchTimer=null},850);
+     clearTimeout(mismatchTimer);
+     mismatchTimer=setTimeout(()=>{
+       if(thisRound!==roundId)return;
+       [previous,second].forEach(card=>{
+         card.classList.remove('flipped');
+         card.setAttribute('aria-label','Hidden card');
+         card.blur();
+       });
+       locked=false;
+       mismatchTimer=null;
+     },1200);
    }
  }
  function finish(){
