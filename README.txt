@@ -1,5 +1,4 @@
-MiniPlay Studio — static browser games
-Open index.html locally or deploy the project as a static site.
+MiniPlay Studio — browser games
 
 Games included:
 - Memory Match
@@ -12,7 +11,6 @@ Games included:
 - Odd One Out
 - What's Wrong?
 - Number Sequence Solver
+- Picture Jigsaw Puzzle
 
-The brain puzzle games include ten rounds, scoring, explanations and locally saved best scores.
-
-- Picture Jigsaw Puzzle: drag-and-drop picture puzzle with 3x3, 4x4 and 5x5 difficulty.
+Picture Jigsaw Puzzle includes 3x3, 4x4 and 5x5 difficulty levels, drag-and-drop pieces, a picture preview, timer and saved best times.

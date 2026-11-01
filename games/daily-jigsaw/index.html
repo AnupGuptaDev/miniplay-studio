@@ -74,12 +74,13 @@ return `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox
 </svg>`;
 }
 let image=new Image();
-function loadScene(){return new Promise(resolve=>{const blob=new Blob([sceneSvg()],{type:"image/svg+xml"});const url=URL.createObjectURL(blob);image.onload=()=>{URL.revokeObjectURL(url);resolve()};image.src=url})}
+function loadScene(){return new Promise((resolve,reject)=>{image.onload=()=>resolve();image.onerror=()=>reject(new Error("Puzzle picture could not load"));image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(sceneSvg())})}
 function formatTime(s){let m=Math.floor(s/60),sec=s%60;return String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0")}
 function updateTimer(){elapsed=Math.floor((Date.now()-startAt)/1000);$("time").textContent=formatTime(elapsed)}
 function bestText(){let b=localStorage.getItem(bestKey());$("best").textContent=b?formatTime(+b):"—"}
 function drawBoard(){
 ctx.clearRect(0,0,W,W);ctx.fillStyle="#e8effa";ctx.fillRect(0,0,W,W);
+if(!complete){ctx.save();ctx.globalAlpha=pieces.length?0.14:0.92;ctx.drawImage(image,0,0,W,W);ctx.restore()}
 for(let p of pieces){if(p.done){ctx.drawImage(image,p.x*cell,p.y*cell,cell,cell,p.x*cell,p.y*cell,cell,cell)}}
 ctx.strokeStyle="#fff";ctx.lineWidth=3;
 for(let i=0;i<=n;i++){ctx.beginPath();ctx.moveTo(i*W/n,0);ctx.lineTo(i*W/n,W);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*W/n);ctx.lineTo(W,i*W/n);ctx.stroke()}
@@ -109,6 +110,6 @@ for(let y=0;y<n;y++)for(let x=0;x<n;x++)pieces.push({id:y*n+x,x,y,done:false});
 for(let i=pieces.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[pieces[i],pieces[j]]=[pieces[j],pieces[i]]}
 drawBoard();renderTray();$("message").textContent="Drag the loose picture pieces onto their matching places.";clearInterval(timer);startAt=Date.now();timer=setInterval(updateTimer,1000)}
 $("newGame").onclick=newGame;$("difficulty").onchange=()=>{newGame()};$("previewBtn").onclick=()=>{let im=$("preview");im.src=image.src;im.style.display=im.style.display==="block"?"none":"block";$("board").style.display=im.style.display==="block"?"none":"block"};
-bestText();loadScene().then(drawBoard);
+bestText();loadScene().then(()=>{drawBoard();newGame()}).catch(()=>{$("message").textContent="The puzzle picture could not load. Please refresh and try again."});
 })();
 </script></body></html>
