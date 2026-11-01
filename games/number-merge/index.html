@@ -7,6 +7,63 @@ main{width:min(760px,100%)}a{color:var(--accent);text-decoration:none}.back{disp
 @media(max-width:480px){body{padding:16px 9px}.panel{padding:12px}.stat{min-width:70px;padding:7px}.bar{align-items:stretch}.bar .stats{width:100%}}
 
 .tile{aspect-ratio:1;border-radius:9px;background:#22334c;display:grid;place-items:center;font-size:clamp(1.15rem,5vw,2rem);font-weight:900;color:#172337}.v2{background:#dce9e5}.v4{background:#c6e5d9}.v8{background:#ffc978}.v16{background:#ffad76}.v32{background:#f58d82}.v64{background:#e97882;color:white}.v128,.v256,.v512{background:#b8a5ff}.v1024,.v2048{background:#80e0c0}
+
+/* MiniPlay Studio bright theme */
+body { background-color:#f3f6ff !important; color:#18243a !important; }
+.game-card { background:#ffffff !important; border:1px solid #dce4f2 !important; box-shadow:0 12px 30px rgba(42,65,105,.10); }
+.game-card .game-info, .game-card .card-info, .game-card .game-details { background:#ffffff !important; color:#18243a !important; }
+.game-card p, .game-card .description, .game-card .meta { color:#53627c !important; }
+.orb { background:linear-gradient(145deg,#dceaff,#b9d8f2) !important; box-shadow:0 24px 60px rgba(50,85,140,.18) !important; }
+.float-tag { background:#ffffff !important; color:#087f70 !important; box-shadow:0 8px 22px rgba(42,65,105,.12) !important; }
+main { color:#18243a; }
+.panel, .modal { background:#ffffff !important; color:#18243a !important; border-color:#dce4f2 !important; }
+.stat { background:#f3f6ff !important; color:#18243a !important; }
+
+
+/* Compact first-screen game layout: keep title, controls and playable area visible sooner */
+body { padding: 8px 14px !important; }
+main { width: min(760px, 100%); }
+.back { margin: 0 0 6px !important; font-size: .9rem; }
+header { margin: 0 0 9px !important; }
+.brand { font-size: .68rem !important; }
+h1 { font-size: clamp(1.75rem, 4vw, 2.45rem) !important; margin: 3px 0 !important; }
+.sub { font-size: .9rem; line-height: 1.35; }
+.panel { padding: 12px !important; border-radius: 18px !important; }
+.bar { margin-bottom: 9px !important; }
+.stat { padding: 6px 10px !important; min-width: 70px !important; }
+.stat strong { font-size: 1.05rem !important; }
+button { padding: 8px 12px !important; }
+.message { margin: 8px 0 !important; min-height: 20px !important; }
+.foot, .footer { margin-top: 8px !important; }
+@media (min-height: 760px) {
+  body { padding-top: 6px !important; }
+  header { margin-bottom: 7px !important; }
+}
+@media (max-width: 600px) {
+  body { padding: 8px 10px !important; }
+  .panel { padding: 10px !important; }
+  .back { margin-bottom: 5px !important; }
+}
+
+#board { max-width: min(350px, 76vw) !important; gap: 7px !important; padding: 7px !important; background: #dce4f2 !important; }
+
+
+.how-to {
+  max-width: 760px;
+  margin: 14px auto 0;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 1px solid #dce4f2;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(42,65,105,.07);
+  color: #18243a;
+}
+.how-to h2 { margin: 0 0 8px; font-size: 1.12rem; color: #18243a; }
+.how-to ol { margin: 0; padding-left: 21px; color: #53627c; }
+.how-to li { margin: 3px 0; line-height: 1.45; }
+.how-to p { margin: 9px 0 0; color: #53627c; font-size: .9rem; }
+.how-to strong { color: #087f70; }
+
 </style></head><body><main>
 <a class="back" href="../../">← Back to MiniPlay Studio</a>
 <header><div class="brand">MINIPLAY <span>STUDIO</span></div><h1>Number Merge</h1><p class="sub">Combine matching tiles and chase 2048.</p></header>
@@ -14,6 +71,19 @@ main{width:min(760px,100%)}a{color:var(--accent);text-decoration:none}.back{disp
 <section class="panel"><div class="bar"><div class="stats"><div class="stat"><small>Score</small><strong id="score">0</strong></div><div class="stat"><small>Best</small><strong id="best">0</strong></div></div><button class="secondary" id="restart">↻ New game</button></div>
 <div id="board" role="grid" aria-label="Number merge board" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:430px;margin:auto;background:#0d1928;padding:9px;border-radius:15px;touch-action:none"></div>
 <p class="message" id="message">Use arrow keys or swipe to combine matching numbers. Reach 2048!</p><div style="display:flex;justify-content:center;gap:8px;margin-top:12px"><button class="secondary" data-move="up">↑</button><button class="secondary" data-move="left">←</button><button class="secondary" data-move="down">↓</button><button class="secondary" data-move="right">→</button></div></section>
+
+<section class="how-to" aria-labelledby="how-to-title">
+  <h2 id="how-to-title">How to Play Number Merge</h2>
+  <ol>
+    <li>Move the numbered tiles up, down, left or right.</li>
+    <li>When two tiles with the same number meet, they merge into one tile with their values added together.</li>
+    <li>Each move can add a new 2 or 4 tile to the board.</li>
+    <li>Keep combining tiles, build your score and aim to make a 2048 tile.</li>
+    <li>The game ends when there are no empty spaces and no possible merges.</li>
+  </ol>
+  <p><strong>Controls:</strong> Use the arrow keys, the direction buttons or swipe the board on a touch screen.</p>
+</section>
+
 <div class="foot"><span>MiniPlay Studio · Browser game</span><span><a href="../../">More games</a></span></div>
 </main><script>
 (()=>{const el=document.querySelector('#board'),scoreEl=document.querySelector('#score'),bestEl=document.querySelector('#best'),msg=document.querySelector('#message'),key='miniplay-2048-best';let a,score,over=false;bestEl.textContent=localStorage.getItem(key)||'0';

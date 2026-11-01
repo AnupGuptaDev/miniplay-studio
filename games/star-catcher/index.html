@@ -5,6 +5,63 @@
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% -10%,#dce8ff 0,#f3f6ff 58%);font-family:Inter,system-ui,sans-serif;color:var(--ink);display:flex;justify-content:center;padding:25px 14px}
 main{width:min(760px,100%)}a{color:var(--accent);text-decoration:none}.back{display:inline-block;margin:4px 0 18px;color:var(--muted)}header{text-align:center;margin-bottom:20px}.brand{font-size:.75rem;letter-spacing:.18em;color:var(--accent);font-weight:850}.brand span{color:var(--muted)}h1{font-size:clamp(2rem,6vw,3.1rem);margin:7px 0;letter-spacing:-.05em}.sub{color:var(--muted);margin:0}.panel{background:linear-gradient(145deg,#ffffff,#f6f8ff);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:0 18px 55px #0005}.bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px}.stats{display:flex;gap:9px;flex-wrap:wrap}.stat{background:#f3f6ff;border:1px solid var(--line);border-radius:12px;padding:8px 12px;min-width:82px}.stat small{display:block;color:var(--muted);font-size:.66rem;text-transform:uppercase;letter-spacing:.1em}.stat strong{font-size:1.2rem;font-variant-numeric:tabular-nums}button,select{font:inherit}button{border:0;border-radius:11px;padding:10px 14px;font-weight:800;cursor:pointer;transition:filter .15s,transform .15s}button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:focus-visible,a:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:3px}.primary{background:var(--accent);color:#ffffff}.secondary{background:var(--panel2);color:var(--ink);border:1px solid var(--line)}select{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:9px}.message{text-align:center;color:var(--muted);min-height:27px;margin:15px 0 0}.message strong{color:var(--accent)}.foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:.78rem;margin:14px 3px 0}
 @media(max-width:480px){body{padding:16px 9px}.panel{padding:12px}.stat{min-width:70px;padding:7px}.bar{align-items:stretch}.bar .stats{width:100%}}
+
+/* MiniPlay Studio bright theme */
+body { background-color:#f3f6ff !important; color:#18243a !important; }
+.game-card { background:#ffffff !important; border:1px solid #dce4f2 !important; box-shadow:0 12px 30px rgba(42,65,105,.10); }
+.game-card .game-info, .game-card .card-info, .game-card .game-details { background:#ffffff !important; color:#18243a !important; }
+.game-card p, .game-card .description, .game-card .meta { color:#53627c !important; }
+.orb { background:linear-gradient(145deg,#dceaff,#b9d8f2) !important; box-shadow:0 24px 60px rgba(50,85,140,.18) !important; }
+.float-tag { background:#ffffff !important; color:#087f70 !important; box-shadow:0 8px 22px rgba(42,65,105,.12) !important; }
+main { color:#18243a; }
+.panel, .modal { background:#ffffff !important; color:#18243a !important; border-color:#dce4f2 !important; }
+.stat { background:#f3f6ff !important; color:#18243a !important; }
+
+
+/* Compact first-screen game layout: keep title, controls and playable area visible sooner */
+body { padding: 8px 14px !important; }
+main { width: min(760px, 100%); }
+.back { margin: 0 0 6px !important; font-size: .9rem; }
+header { margin: 0 0 9px !important; }
+.brand { font-size: .68rem !important; }
+h1 { font-size: clamp(1.75rem, 4vw, 2.45rem) !important; margin: 3px 0 !important; }
+.sub { font-size: .9rem; line-height: 1.35; }
+.panel { padding: 12px !important; border-radius: 18px !important; }
+.bar { margin-bottom: 9px !important; }
+.stat { padding: 6px 10px !important; min-width: 70px !important; }
+.stat strong { font-size: 1.05rem !important; }
+button { padding: 8px 12px !important; }
+.message { margin: 8px 0 !important; min-height: 20px !important; }
+.foot, .footer { margin-top: 8px !important; }
+@media (min-height: 760px) {
+  body { padding-top: 6px !important; }
+  header { margin-bottom: 7px !important; }
+}
+@media (max-width: 600px) {
+  body { padding: 8px 10px !important; }
+  .panel { padding: 10px !important; }
+  .back { margin-bottom: 5px !important; }
+}
+
+#game { width: min(100%, 330px, 42vh) !important; height: auto !important; }
+
+
+.how-to {
+  max-width: 760px;
+  margin: 14px auto 0;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 1px solid #dce4f2;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(42,65,105,.07);
+  color: #18243a;
+}
+.how-to h2 { margin: 0 0 8px; font-size: 1.12rem; color: #18243a; }
+.how-to ol { margin: 0; padding-left: 21px; color: #53627c; }
+.how-to li { margin: 3px 0; line-height: 1.45; }
+.how-to p { margin: 9px 0 0; color: #53627c; font-size: .9rem; }
+.how-to strong { color: #087f70; }
+
 </style></head><body><main>
 <a class="back" href="../../">← Back to MiniPlay Studio</a>
 <header><div class="brand">MINIPLAY <span>STUDIO</span></div><h1>Star Catcher</h1><p class="sub">Catch falling stars, avoid rocks and beat your high score.</p></header>
@@ -13,6 +70,19 @@ main{width:min(760px,100%)}a{color:var(--accent);text-decoration:none}.back{disp
 <canvas id="game" width="480" height="560" style="display:block;width:min(100%,420px);height:auto;margin:auto;background:#0d1928;border:1px solid #34465f;border-radius:14px;touch-action:none" aria-label="Star catcher game"></canvas>
 <p class="message" id="message">Move with ← → or A/D. On mobile, drag your basket. Catch stars and avoid rocks!</p>
 <div style="display:flex;justify-content:center;gap:10px;margin-top:10px"><button class="secondary" id="left">← Left</button><button class="secondary" id="right">Right →</button></div></section>
+
+<section class="how-to" aria-labelledby="how-to-title">
+  <h2 id="how-to-title">How to Play Star Catcher</h2>
+  <ol>
+    <li>Move your basket left and right to catch the falling stars.</li>
+    <li>Each star adds 10 points to your score.</li>
+    <li>Avoid the falling rocks. Each rock you catch costs one life.</li>
+    <li>You start with three lives. The game ends when you run out.</li>
+    <li>Try to beat your best score, or select Restart for a new game.</li>
+  </ol>
+  <p><strong>Controls:</strong> Use the left and right arrow keys or A and D. On touch devices, drag across the game area or use the direction buttons.</p>
+</section>
+
 <div class="foot"><span>MiniPlay Studio · Browser game</span><span><a href="../../">More games</a></span></div>
 </main><script>
 (()=>{const c=document.querySelector('#game'),ctx=c.getContext('2d'),scoreEl=document.querySelector('#score'),livesEl=document.querySelector('#lives'),bestEl=document.querySelector('#best'),msg=document.querySelector('#message'),key='miniplay-star-best';let player,items,score,lives,keys={},raf,last,over;bestEl.textContent=localStorage.getItem(key)||'0';

@@ -7,12 +7,84 @@ main{width:min(760px,100%)}a{color:var(--accent);text-decoration:none}.back{disp
 @media(max-width:480px){body{padding:16px 9px}.panel{padding:12px}.stat{min-width:70px;padding:7px}.bar{align-items:stretch}.bar .stats{width:100%}}
 
 #board button{aspect-ratio:1;background:#22334c;border:1px solid #405674;color:#80e0c0;font-size:clamp(2.5rem,12vw,4.5rem);border-radius:16px}#board button.o{color:#ffc978}#board button:disabled{cursor:default}
+
+/* MiniPlay Studio bright theme */
+body { background-color:#f3f6ff !important; color:#18243a !important; }
+.game-card { background:#ffffff !important; border:1px solid #dce4f2 !important; box-shadow:0 12px 30px rgba(42,65,105,.10); }
+.game-card .game-info, .game-card .card-info, .game-card .game-details { background:#ffffff !important; color:#18243a !important; }
+.game-card p, .game-card .description, .game-card .meta { color:#53627c !important; }
+.orb { background:linear-gradient(145deg,#dceaff,#b9d8f2) !important; box-shadow:0 24px 60px rgba(50,85,140,.18) !important; }
+.float-tag { background:#ffffff !important; color:#087f70 !important; box-shadow:0 8px 22px rgba(42,65,105,.12) !important; }
+main { color:#18243a; }
+.panel, .modal { background:#ffffff !important; color:#18243a !important; border-color:#dce4f2 !important; }
+.stat { background:#f3f6ff !important; color:#18243a !important; }
+
+
+/* Compact first-screen game layout: keep title, controls and playable area visible sooner */
+body { padding: 8px 14px !important; }
+main { width: min(760px, 100%); }
+.back { margin: 0 0 6px !important; font-size: .9rem; }
+header { margin: 0 0 9px !important; }
+.brand { font-size: .68rem !important; }
+h1 { font-size: clamp(1.75rem, 4vw, 2.45rem) !important; margin: 3px 0 !important; }
+.sub { font-size: .9rem; line-height: 1.35; }
+.panel { padding: 12px !important; border-radius: 18px !important; }
+.bar { margin-bottom: 9px !important; }
+.stat { padding: 6px 10px !important; min-width: 70px !important; }
+.stat strong { font-size: 1.05rem !important; }
+button { padding: 8px 12px !important; }
+.message { margin: 8px 0 !important; min-height: 20px !important; }
+.foot, .footer { margin-top: 8px !important; }
+@media (min-height: 760px) {
+  body { padding-top: 6px !important; }
+  header { margin-bottom: 7px !important; }
+}
+@media (max-width: 600px) {
+  body { padding: 8px 10px !important; }
+  .panel { padding: 10px !important; }
+  .back { margin-bottom: 5px !important; }
+}
+
+#board { max-width: 315px !important; gap: 7px !important; }
+#board button { background: #eaf0ff !important; border: 1px solid #dce4f2 !important; color: #087f70 !important; border-radius: 13px !important; font-size: clamp(2rem, 8vw, 3.2rem) !important; }
+#board button.o { color: #e39a2f !important; }
+
+
+.how-to {
+  max-width: 760px;
+  margin: 14px auto 0;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 1px solid #dce4f2;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(42,65,105,.07);
+  color: #18243a;
+}
+.how-to h2 { margin: 0 0 8px; font-size: 1.12rem; color: #18243a; }
+.how-to ol { margin: 0; padding-left: 21px; color: #53627c; }
+.how-to li { margin: 3px 0; line-height: 1.45; }
+.how-to p { margin: 9px 0 0; color: #53627c; font-size: .9rem; }
+.how-to strong { color: #087f70; }
+
 </style></head><body><main>
 <a class="back" href="../../">← Back to MiniPlay Studio</a>
 <header><div class="brand">MINIPLAY <span>STUDIO</span></div><h1>Tic-Tac-Toe</h1><p class="sub">A timeless little battle. Play the computer or a friend.</p></header>
 
 <section class="panel"><div class="bar"><div class="stats"><div class="stat"><small>Human</small><strong id="human">0</strong></div><div class="stat"><small>Draws</small><strong id="draws">0</strong></div><div class="stat"><small>Computer</small><strong id="cpu">0</strong></div></div><div><select id="mode" aria-label="Opponent"><option value="cpu">Play computer</option><option value="two">Two players</option></select></div></div>
 <div id="board" style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;max-width:390px;margin:auto"></div><p class="message" id="message">Your turn — you are X.</p><div style="text-align:center"><button class="primary" id="restart">New round</button></div></section>
+
+<section class="how-to" aria-labelledby="how-to-title">
+  <h2 id="how-to-title">How to Play Tic-Tac-Toe</h2>
+  <ol>
+    <li>Choose Play computer to play against the computer, or Two players to play with a friend.</li>
+    <li>Players take turns selecting an empty square. X goes first.</li>
+    <li>Be the first to get three of your marks in a horizontal, vertical or diagonal line.</li>
+    <li>If all nine squares are filled and nobody has three in a row, the round is a draw.</li>
+    <li>Select New round to play again. The score counters track wins and draws during your visit.</li>
+  </ol>
+  <p><strong>Tip:</strong> Try to make a line while blocking your opponent from making one.</p>
+</section>
+
 <div class="foot"><span>MiniPlay Studio · Browser game</span><span><a href="../../">More games</a></span></div>
 </main><script>
 (()=>{const boardEl=document.querySelector('#board'),msg=document.querySelector('#message'),mode=document.querySelector('#mode');let b,turn,done,scores={human:0,draws:0,cpu:0};const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
