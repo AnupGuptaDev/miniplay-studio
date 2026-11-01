@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Play What's Wrong? brain puzzle at MiniPlay Studio."><title>What's Wrong? — MiniPlay Studio</title><style>
+:root{color-scheme:light;--ink:#18243a;--muted:#63718a;--accent:#087f70;--line:#dce4f2}
+*{box-sizing:border-box}body{margin:0;padding:8px 14px;background:radial-gradient(circle at 50% -10%,#dce8ff 0,#f3f6ff 58%);font:15px/1.5 system-ui,sans-serif;color:var(--ink)}
+main{width:min(760px,100%);margin:auto}.back{display:inline-block;margin:0 0 6px;color:var(--muted);text-decoration:none}
+header{text-align:center;margin:0 0 9px}.brand{font-size:.68rem;letter-spacing:.18em;color:var(--accent);font-weight:850}
+h1{font-size:clamp(1.65rem,3.6vw,2.25rem);margin:3px 0}.sub{color:var(--muted);margin:0;font-size:.86rem}
+.panel,.how-to{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 12px 30px #2a41691a}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.stat{background:#f3f6ff;border:1px solid var(--line);padding:5px 10px;border-radius:10px;font-size:.8rem}.stat b{display:block;font-size:1rem}
+button{font:inherit;font-size:.92rem;border:0;border-radius:10px;padding:10px 14px;background:#eaf0ff;color:var(--ink);cursor:pointer}
+button.primary{background:var(--accent);color:#fff}button:disabled{opacity:.45;cursor:not-allowed}
+.message{min-height:24px;text-align:center;color:var(--muted);margin:10px 0 0}
+.how-to{margin:12px auto 0}.how-to h2{font-size:1.05rem;margin:0 0 6px}.how-to ol{margin:0;padding-left:21px;color:#53627c;font-size:.86rem}.how-to li{margin:3px 0}.how-to p{margin:7px 0 0;color:#53627c;font-size:.86rem}.how-to strong{color:var(--accent)}
+.play-area{min-height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:10px}
+.choices{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.choice{min-width:90px;background:#f4f7ff;border:1px solid #dce4f2;font-size:1.1rem;padding:13px 16px}.choice:hover{border-color:var(--accent);background:#e9f7f3}
+.items{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}.item{min-width:76px;min-height:72px;display:grid;place-items:center;background:#f2f6ff;border:1px solid var(--line);border-radius:14px;font-size:2rem;padding:8px}
+.prompt{font-size:1rem;font-weight:750}.feedback{font-weight:750;min-height:25px}
+@media(max-width:520px){body{padding:7px 9px}.panel,.how-to{padding:11px}.item{min-width:62px;min-height:62px;font-size:1.7rem}}
+</style></head><body><main>
+<a class="back" href="../../">← Back to MiniPlay Studio</a><header><div class="brand">MINIPLAY STUDIO</div><h1>What's Wrong?</h1><p class="sub">Inspect each little scene and identify the impossible detail.</p></header>
+<section class="panel"><div class="bar"><div class="stat">Score <b id="score">0</b></div><div class="stat">Best <b id="best">0</b></div><button class="primary" id="start">Start / Restart</button></div><div class="play-area"><div class="prompt" id="prompt">Look carefully at the scene. Which item is wrong?</div><div class="items" id="items"></div><div class="feedback" id="feedback"></div></div><p class="message" id="message">Play ten rounds and try to beat your best score.</p></section>
+<section class="how-to"><h2>How to Play What's Wrong?</h2><ol><li>Press Start to view a scene made of several objects.</li><li>One object does not fit the scene or breaks a simple rule.</li><li>Tap the object you think is wrong.</li><li>Read the explanation after each answer.</li><li>Find the wrong item in ten different scenes.</li></ol><p><strong>Tip:</strong> Think about what belongs in the setting and what would be impossible there.</p></section>
+</main><script>(()=>{
+const scenes=[
+{a:["☀️","🌳","🌷","🧊","🦋"],bad:"🧊",why:"An ice cube doesn't belong in a sunny garden scene."},
+{a:["🛏️","🪑","💡","🛁","🖼️"],bad:"🛁",why:"A bathtub is unusual in a bedroom."},
+{a:["🐟","🐠","🐙","🦀","🐘"],bad:"🐘",why:"An elephant doesn't live underwater."},
+{a:["✏️","📓","📚","🎒","🍳"],bad:"🍳",why:"A frying pan doesn't belong with school supplies."},
+{a:["☂️","🌧️","💧","🌈","🔥"],bad:"🔥",why:"Fire is the odd one in this rainy weather scene."},
+{a:["🥄","🍴","🍽️","🥢","🧦"],bad:"🧦",why:"A sock is not a dining utensil."},
+{a:["🚦","🚗","🛣️","🚌","🛏️"],bad:"🛏️",why:"A bed doesn't belong on a road."},
+{a:["🧤","🧣","🧥","🧦","🍦"],bad:"🍦",why:"Ice cream is not winter clothing."},
+{a:["🌙","⭐","🪐","🚀","🐄"],bad:"🐄",why:"A cow is not an object in space."},
+{a:["🪥","🧼","🧴","🧻","🏀"],bad:"🏀",why:"A basketball doesn't belong with bathroom items."}
+];
+let i=0,score=0,best=+(localStorage.whatsWrongBest||0),locked=false;const $=id=>document.getElementById(id);$("best").textContent=best;
+function load(){locked=false;if(i>=scenes.length){finish();return}let r=scenes[i];$("prompt").textContent="Scene "+(i+1)+"/10 — tap the item that doesn't belong."; $("items").innerHTML=[...r.a].sort(()=>Math.random()-.5).map(x=>'<button class="item" data-v="'+x+'">'+x+'</button>').join("");$("items").querySelectorAll("button").forEach(b=>b.onclick=()=>pick(b.dataset.v))}
+function pick(v){if(locked)return;locked=true;let r=scenes[i];if(v===r.bad){score+=10;$("feedback").textContent="You spotted it! "+r.why}else $("feedback").textContent="Not quite. "+r.why;i++;$("score").textContent=score;setTimeout(load,1500)}
+function start(){i=0;score=0;$("score").textContent=0;$("feedback").textContent="";load()}
+function finish(){best=Math.max(best,score);localStorage.whatsWrongBest=best;$("best").textContent=best;$("prompt").textContent="All scenes solved!";$("items").innerHTML="";$("feedback").textContent="Final score: "+score+"/100. Press Start to play again."}
+$("start").onclick=start;load();
+})();</script></body></html>

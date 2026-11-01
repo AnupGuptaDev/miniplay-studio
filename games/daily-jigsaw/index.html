@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Play a picture jigsaw puzzle. Drag the pieces into place and complete the picture.">
+<title>Picture Jigsaw Puzzle — MiniPlay Studio</title>
+<style>
+:root{--ink:#18243a;--muted:#63718a;--accent:#087f70;--line:#dce4f2}
+*{box-sizing:border-box}
+body{margin:0;padding:10px 14px;background:radial-gradient(circle at 50% -10%,#dce8ff 0,#f3f6ff 58%);font:15px/1.5 system-ui,sans-serif;color:var(--ink)}
+main{width:min(900px,100%);margin:auto}.back{display:inline-block;margin:0 0 7px;color:var(--muted);text-decoration:none}
+header{text-align:center;margin:0 0 12px}.brand{font-size:.68rem;letter-spacing:.18em;color:var(--accent);font-weight:850}
+h1{font-size:clamp(1.65rem,3.6vw,2.25rem);margin:3px 0}.sub{color:var(--muted);margin:0;font-size:.86rem}
+.panel,.how-to{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 12px 30px #2a41691a}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:12px}
+.stats{display:flex;gap:8px;flex-wrap:wrap}.stat{background:#f3f6ff;border:1px solid var(--line);padding:5px 10px;border-radius:10px;font-size:.8rem}.stat b{display:block;font-size:1rem}
+select,button{font:inherit;font-size:.9rem;border:1px solid var(--line);border-radius:10px;padding:9px 12px;background:#f3f6ff;color:var(--ink)}
+button{cursor:pointer}button.primary{background:var(--accent);border-color:var(--accent);color:white;font-weight:800}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:14px;align-items:start}
+.board-wrap,.tray-wrap{background:#f6f8ff;border:1px solid var(--line);border-radius:14px;padding:10px}
+h2{font-size:.95rem;margin:0 0 8px}.board{width:100%;display:block;aspect-ratio:1;background:#e7eefb;border-radius:8px;touch-action:none}
+.tray{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;min-height:180px}
+.piece{border:2px solid #fff;border-radius:9px;background:white;box-shadow:0 3px 9px #18243a20;aspect-ratio:1;display:grid;place-items:center;overflow:hidden;cursor:grab;touch-action:none;user-select:none}
+.piece:active{cursor:grabbing}.piece canvas{width:100%;height:100%;display:block;pointer-events:none}
+.tray-note{color:var(--muted);font-size:.78rem;margin:8px 0 0}
+.message{text-align:center;min-height:24px;color:var(--muted);margin:10px 0 0;font-size:.9rem}
+.how-to{margin:12px auto 0}.how-to h2{font-size:1.05rem;margin:0 0 6px}.how-to ol{margin:0;padding-left:21px;color:#53627c;font-size:.86rem}.how-to li{margin:3px 0}.how-to p{margin:7px 0 0;color:#53627c;font-size:.86rem}.how-to strong{color:var(--accent)}
+#preview{display:none;width:100%;border-radius:8px;margin-top:8px}
+@media(max-width:650px){body{padding:7px 9px}.layout{grid-template-columns:1fr}.tray{grid-template-columns:repeat(4,minmax(0,1fr));min-height:0}.panel,.how-to{padding:10px}.toolbar{align-items:flex-start}}
+</style></head>
+<body><main>
+<a class="back" href="../../">← Back to MiniPlay Studio</a>
+<header><div class="brand">MINIPLAY STUDIO</div><h1>Picture Jigsaw Puzzle</h1><p class="sub">Put the picture back together, one piece at a time.</p></header>
+<section class="panel">
+ <div class="toolbar">
+  <div class="stats"><div class="stat">Placed <b id="placed">0 / 9</b></div><div class="stat">Time <b id="time">00:00</b></div><div class="stat">Best <b id="best">—</b></div></div>
+  <div style="display:flex;gap:7px;flex-wrap:wrap"><select id="difficulty" aria-label="Puzzle difficulty"><option value="3">Easy · 3 × 3</option><option value="4">Medium · 4 × 4</option><option value="5">Hard · 5 × 5</option></select><button id="previewBtn">Preview picture</button><button class="primary" id="newGame">New puzzle</button></div>
+ </div>
+ <div class="layout">
+  <div class="board-wrap"><h2>Jigsaw board</h2><canvas id="board" class="board" width="600" height="600" aria-label="Jigsaw puzzle board. Drag puzzle pieces into the matching spaces."></canvas><img id="preview" alt="Completed puzzle preview"></div>
+  <div class="tray-wrap"><h2>Loose pieces</h2><div id="tray" class="tray"></div><p class="tray-note">Drag each piece onto the matching spot on the board. Pieces snap into place when close enough.</p></div>
+ </div>
+ <p class="message" id="message">Choose a difficulty and press New puzzle to begin.</p>
+</section>
+<section class="how-to"><h2>How to Play Picture Jigsaw Puzzle</h2><ol>
+<li>Choose Easy (9 pieces), Medium (16 pieces) or Hard (25 pieces).</li>
+<li>Press New puzzle to see the picture cut into jigsaw pieces.</li>
+<li>Drag a loose piece from the tray onto the matching position on the board.</li>
+<li>If it is close to the correct place, it snaps into position. Incorrect pieces return to the tray.</li>
+<li>Complete the whole picture to finish. Your completion time and best time are saved on your device.</li>
+</ol><p><strong>Tip:</strong> Start with the corners and edges, then use colours and details in the picture to match the middle pieces.</p></section>
+</main>
+<script>
+(()=>{
+const board=document.getElementById("board"),ctx=board.getContext("2d"),tray=document.getElementById("tray");
+const $=id=>document.getElementById(id);
+let n=3,pieces=[],placed=0,startAt=0,timer=null,elapsed=0,drag=null,complete=false;
+const W=600, cell=200;
+const bestKey=()=>`jigsawBest${n}`;
+function sceneSvg(){
+return `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#7ec8f5"/><stop offset="1" stop-color="#e7f6ff"/></linearGradient><linearGradient id="hill" x2="0" y2="1"><stop stop-color="#8dd17d"/><stop offset="1" stop-color="#328b62"/></linearGradient></defs>
+<rect width="600" height="600" fill="url(#sky)"/><circle cx="465" cy="112" r="55" fill="#ffd45c"/>
+<g fill="#fff" opacity=".9"><ellipse cx="130" cy="125" rx="70" ry="22"/><ellipse cx="170" cy="110" rx="45" ry="27"/><ellipse cx="95" cy="108" rx="38" ry="20"/><ellipse cx="355" cy="190" rx="58" ry="18"/><ellipse cx="390" cy="175" rx="35" ry="23"/></g>
+<path d="M0 370 Q125 235 250 365 T500 330 T700 380 V600 H0Z" fill="#6dbb78"/>
+<path d="M0 435 Q150 330 300 430 T600 410 V600 H0Z" fill="url(#hill)"/>
+<path d="M0 500 Q140 420 290 500 T600 470 V600 H0Z" fill="#287a58"/>
+<g><rect x="92" y="315" width="18" height="155" rx="5" fill="#81532e"/><circle cx="100" cy="290" r="64" fill="#267e53"/><circle cx="62" cy="310" r="38" fill="#329b60"/><circle cx="130" cy="330" r="42" fill="#23814e"/>
+<rect x="470" y="335" width="17" height="130" rx="5" fill="#81532e"/><circle cx="478" cy="305" r="56" fill="#287e52"/><circle cx="445" cy="323" r="35" fill="#3a9c5f"/><circle cx="510" cy="330" r="37" fill="#267b4c"/></g>
+<path d="M0 540 Q130 485 260 545 T600 530 V600 H0Z" fill="#f2d58a"/>
+<path d="M260 600 Q280 550 320 520 Q350 490 370 470" fill="none" stroke="#fff2c8" stroke-width="28" stroke-linecap="round"/>
+<g fill="#fff"><path d="M190 455l8 18 19 2-14 12 4 19-17-10-17 10 4-19-14-12 19-2z"/><path d="M410 420l6 13 14 2-10 9 3 14-13-7-12 7 2-14-10-9 14-2z"/></g>
+<g fill="#e85c68"><circle cx="245" cy="520" r="7"/><circle cx="225" cy="545" r="6"/><circle cx="430" cy="550" r="7"/><circle cx="150" cy="525" r="6"/></g>
+</svg>`;
+}
+let image=new Image();
+function loadScene(){return new Promise(resolve=>{const blob=new Blob([sceneSvg()],{type:"image/svg+xml"});const url=URL.createObjectURL(blob);image.onload=()=>{URL.revokeObjectURL(url);resolve()};image.src=url})}
+function formatTime(s){let m=Math.floor(s/60),sec=s%60;return String(m).padStart(2,"0")+":"+String(sec).padStart(2,"0")}
+function updateTimer(){elapsed=Math.floor((Date.now()-startAt)/1000);$("time").textContent=formatTime(elapsed)}
+function bestText(){let b=localStorage.getItem(bestKey());$("best").textContent=b?formatTime(+b):"—"}
+function drawBoard(){
+ctx.clearRect(0,0,W,W);ctx.fillStyle="#e8effa";ctx.fillRect(0,0,W,W);
+for(let p of pieces){if(p.done){ctx.drawImage(image,p.x*cell,p.y*cell,cell,cell,p.x*cell,p.y*cell,cell,cell)}}
+ctx.strokeStyle="#fff";ctx.lineWidth=3;
+for(let i=0;i<=n;i++){ctx.beginPath();ctx.moveTo(i*W/n,0);ctx.lineTo(i*W/n,W);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*W/n);ctx.lineTo(W,i*W/n);ctx.stroke()}
+if(!complete){ctx.fillStyle="#52627c";ctx.font="15px system-ui";ctx.textAlign="center";ctx.fillText("Drop pieces here",W/2,W/2)}
+}
+function makePiece(p){
+let c=document.createElement("canvas");c.width=150;c.height=150;let x=c.getContext("2d");
+let sx=p.x*W/n,sy=p.y*W/n,sw=W/n,sh=W/n;
+x.fillStyle="#fff";x.fillRect(0,0,150,150);x.drawImage(image,sx,sy,sw,sh,7,7,136,136);
+x.strokeStyle="#fff";x.lineWidth=4;x.strokeRect(7,7,136,136);
+return c;
+}
+function renderTray(){
+tray.innerHTML="";
+let loose=pieces.filter(p=>!p.done);
+loose.forEach(p=>{let el=document.createElement("div");el.className="piece";el.draggable=true;el.dataset.id=p.id;let c=makePiece(p);el.appendChild(c);
+el.addEventListener("pointerdown",e=>beginDrag(e,p,el));tray.appendChild(el)});
+}
+function beginDrag(e,p,el){if(complete)return;e.preventDefault();let c=makePiece(p),r=el.getBoundingClientRect();drag={p,canvas:c,x:e.clientX,y:e.clientY,offsetX:e.clientX-r.left,offsetY:e.clientY-r.top};el.setPointerCapture?.(e.pointerId);document.addEventListener("pointermove",moveDrag);document.addEventListener("pointerup",endDrag,{once:true});}
+function moveDrag(e){if(!drag)return;drag.x=e.clientX;drag.y=e.clientY;let old=document.getElementById("dragGhost");if(old)old.remove();let ghost=document.createElement("div");ghost.id="dragGhost";ghost.style.cssText=`position:fixed;z-index:99;pointer-events:none;left:${e.clientX-drag.offsetX}px;top:${e.clientY-drag.offsetY}px;width:76px;height:76px;border:2px solid #087f70;border-radius:10px;box-shadow:0 8px 22px #18243a55;background:white;overflow:hidden`;let c=document.createElement("canvas");c.width=150;c.height=150;c.style.cssText="width:100%;height:100%";c.getContext("2d").drawImage(drag.canvas,0,0);ghost.appendChild(c);document.body.appendChild(ghost)}
+function endDrag(e){document.removeEventListener("pointermove",moveDrag);let ghost=document.getElementById("dragGhost");if(ghost)ghost.remove();if(!drag)return;let r=board.getBoundingClientRect(),x=(e.clientX-r.left)*W/r.width,y=(e.clientY-r.top)*W/r.height,p=drag.p;drag=null;
+if(x>=0&&x<=W&&y>=0&&y<=W){let col=Math.floor(x/(W/n)),row=Math.floor(y/(W/n));if(col===p.x&&row===p.y){p.done=true;placed++;$("placed").textContent=placed+" / "+(n*n);$("message").textContent="Nice fit! Keep going.";drawBoard();renderTray();if(placed===n*n)win();return}else $("message").textContent="Not quite — try matching the picture details."}
+}
+function win(){complete=true;clearInterval(timer);updateTimer();let old=+(localStorage.getItem(bestKey())||0);if(!old||elapsed<old)localStorage.setItem(bestKey(),elapsed);bestText();$("message").textContent="🎉 Picture complete! You solved the jigsaw in "+formatTime(elapsed)+". Start a new puzzle to play again.";drawBoard()}
+async function newGame(){n=+$("difficulty").value;await loadScene();pieces=[];placed=0;complete=false;elapsed=0;$("placed").textContent=`0 / ${n*n}`;$("time").textContent="00:00";bestText();$("preview").style.display="none";$("board").style.display="block";
+for(let y=0;y<n;y++)for(let x=0;x<n;x++)pieces.push({id:y*n+x,x,y,done:false});
+for(let i=pieces.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[pieces[i],pieces[j]]=[pieces[j],pieces[i]]}
+drawBoard();renderTray();$("message").textContent="Drag the loose picture pieces onto their matching places.";clearInterval(timer);startAt=Date.now();timer=setInterval(updateTimer,1000)}
+$("newGame").onclick=newGame;$("difficulty").onchange=()=>{newGame()};$("previewBtn").onclick=()=>{let im=$("preview");im.src=image.src;im.style.display=im.style.display==="block"?"none":"block";$("board").style.display=im.style.display==="block"?"none":"block"};
+bestText();loadScene().then(drawBoard);
+})();
+</script></body></html>
