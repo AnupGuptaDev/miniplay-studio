@@ -86,6 +86,28 @@ button, select, input { font-size: .92rem; }
 .how-to ol, .how-to p { font-size: .86rem !important; }
 .message { font-size: .88rem !important; }
 
+
+/* Cross-device compatibility layer: iOS Safari, Android, tablets and desktop */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:contain}
+body{min-width:0;overflow-x:hidden}
+button,select,input,textarea{font:inherit;-webkit-appearance:none;appearance:none}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer}
+button:disabled{cursor:default}
+img,canvas,svg,video{max-width:100%}
+canvas{touch-action:none;-webkit-user-select:none;user-select:none}
+a,button,[role="button"]{-webkit-tap-highlight-color:transparent}
+@supports(padding:max(0px)){body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}
+@media(hover:none) and (pointer:coarse){
+  button,a,.filter,.play{min-height:42px}
+  .game-card:hover{transform:none}
+}
+@media(max-width:700px){
+  .wrap,main{max-width:100%}
+  .panel,.game-panel,.how-to{max-width:100%;overflow-wrap:anywhere}
+  .stats,.bar,.controls,.actions{flex-wrap:wrap}
+}
+
 </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6336230992663277"
      crossorigin="anonymous"></script>
@@ -133,13 +155,13 @@ button, select, input { font-size: .92rem; }
  const symbols=['🍓','🚀','🐼','🌈','🎸','🍕','🦋','⚽','🌻','🧩'];
  const grid=document.querySelector('#grid'),movesEl=document.querySelector('#moves'),timeEl=document.querySelector('#time'),bestEl=document.querySelector('#best'),message=document.querySelector('#message'),difficulty=document.querySelector('#difficulty');
  const welcome=document.querySelector('#welcome'),win=document.querySelector('#win'),result=document.querySelector('#result');
- let deck=[],first=null,locked=false,moves=0,matches=0,seconds=0,timer=null,started=false;
+ let deck=[],first=null,locked=false,moves=0,matches=0,seconds=0,timer=null,mismatchTimer=null,roundId=0,started=false;
  const bestKey=()=>`miniplay-memory-best-${difficulty.value}`;
  const format=s=>`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
  function updateBest(){const b=localStorage.getItem(bestKey());bestEl.textContent=b===null?'—':b;}
  function startClock(){if(timer)return;timer=setInterval(()=>{seconds++;timeEl.textContent=format(seconds)},1000)}
  function makeGame(showWelcome=false){
-   clearInterval(timer);timer=null;started=false;first=null;locked=false;moves=0;matches=0;seconds=0;
+   clearInterval(timer);timer=null;clearTimeout(mismatchTimer);mismatchTimer=null;roundId++;started=false;first=null;locked=false;moves=0;matches=0;seconds=0;
    movesEl.textContent='0';timeEl.textContent='00:00';message.textContent=`Find all ${pairCount()} pairs. Good luck!`;updateBest();
    const chosen=symbols.slice(0,pairCount());deck=[...chosen,...chosen].sort(()=>Math.random()-.5);grid.innerHTML='';
    grid.style.gridTemplateColumns=`repeat(${deck.length===12?4:5},minmax(0,1fr))`;
@@ -159,7 +181,8 @@ button, select, input { font-size: .92rem; }
      if(matches===pairCount())finish();
    }else{
      locked=true;const previous=first;first=null;message.textContent='Not a match. Try again!';
-     setTimeout(()=>{previous.classList.remove('flipped');second.classList.remove('flipped');previous.setAttribute('aria-label','Hidden card');second.setAttribute('aria-label','Hidden card');locked=false},750);
+     const thisRound=roundId;
+     mismatchTimer=setTimeout(()=>{if(thisRound!==roundId)return;previous.classList.remove('flipped');second.classList.remove('flipped');previous.setAttribute('aria-label','Hidden card');second.setAttribute('aria-label','Hidden card');locked=false;mismatchTimer=null},850);
    }
  }
  function finish(){

@@ -27,6 +27,28 @@ h2{font-size:.95rem;margin:0 0 8px}.board{width:100%;display:block;aspect-ratio:
 .how-to{margin:12px auto 0}.how-to h2{font-size:1.05rem;margin:0 0 6px}.how-to ol{margin:0;padding-left:21px;color:#53627c;font-size:.86rem}.how-to li{margin:3px 0}.how-to p{margin:7px 0 0;color:#53627c;font-size:.86rem}.how-to strong{color:var(--accent)}
 #preview{display:none;width:100%;border-radius:8px;margin-top:8px}
 @media(max-width:650px){body{padding:7px 9px}.layout{grid-template-columns:1fr}.tray{grid-template-columns:repeat(4,minmax(0,1fr));min-height:0}.panel,.how-to{padding:10px}.toolbar{align-items:flex-start}}
+
+/* Cross-device compatibility layer: iOS Safari, Android, tablets and desktop */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:contain}
+body{min-width:0;overflow-x:hidden}
+button,select,input,textarea{font:inherit;-webkit-appearance:none;appearance:none}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer}
+button:disabled{cursor:default}
+img,canvas,svg,video{max-width:100%}
+canvas{touch-action:none;-webkit-user-select:none;user-select:none}
+a,button,[role="button"]{-webkit-tap-highlight-color:transparent}
+@supports(padding:max(0px)){body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}
+@media(hover:none) and (pointer:coarse){
+  button,a,.filter,.play{min-height:42px}
+  .game-card:hover{transform:none}
+}
+@media(max-width:700px){
+  .wrap,main{max-width:100%}
+  .panel,.game-panel,.how-to{max-width:100%;overflow-wrap:anywhere}
+  .stats,.bar,.controls,.actions{flex-wrap:wrap}
+}
+
 </style>    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6336230992663277"
      crossorigin="anonymous"></script>
 </head>

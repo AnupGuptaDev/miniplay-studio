@@ -80,6 +80,28 @@ button, select, input { font-size: .92rem; }
 .how-to ol, .how-to p { font-size: .86rem !important; }
 .message { font-size: .88rem !important; }
 
+
+/* Cross-device compatibility layer: iOS Safari, Android, tablets and desktop */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior-y:contain}
+body{min-width:0;overflow-x:hidden}
+button,select,input,textarea{font:inherit;-webkit-appearance:none;appearance:none}
+button{touch-action:manipulation;-webkit-tap-highlight-color:transparent;cursor:pointer}
+button:disabled{cursor:default}
+img,canvas,svg,video{max-width:100%}
+canvas{touch-action:none;-webkit-user-select:none;user-select:none}
+a,button,[role="button"]{-webkit-tap-highlight-color:transparent}
+@supports(padding:max(0px)){body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}}
+@media(hover:none) and (pointer:coarse){
+  button,a,.filter,.play{min-height:42px}
+  .game-card:hover{transform:none}
+}
+@media(max-width:700px){
+  .wrap,main{max-width:100%}
+  .panel,.game-panel,.how-to{max-width:100%;overflow-wrap:anywhere}
+  .stats,.bar,.controls,.actions{flex-wrap:wrap}
+}
+
 </style>    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6336230992663277"
      crossorigin="anonymous"></script>
 </head><body><main>
