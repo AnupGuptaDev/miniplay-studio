@@ -37,32 +37,20 @@ IMPORTANT:
 - No ads, analytics, accounts, multiplayer servers or leaderboards are included yet.
 - AdSense approval and earnings are not guaranteed. Build useful content and review Google's current policies before applying.
 
-New games added:
-- Sudoku Master (games/sudoku/)
-- Bubble Burst (games/bubble-burst/)
-- Running Race (games/running-race/)
-- Javelin Challenge (games/javelin-challenge/)
 
-Additional sports mini-games:
-- Cricket Sixer: games/cricket-sixer/
-- Football Penalty: games/football-penalty/
-- Basketball Hoops: games/basketball-hoops/
-- Long Jump: games/long-jump/
-- Archery Target: games/archery-target/
-- Tennis Rally: games/tennis-rally/
+Current games:
+- Memory Match: games/memory-match/
+- Number Merge: games/number-merge/
+- Rock Paper Scissors: games/rock-paper-scissors/
+- Snake Rush: games/snake-rush/
+- Star Catcher: games/star-catcher/
+- Tic Tac Toe: games/tic-tac-toe/
 
-14 additional sports mini-games added:
-- Volleyball Spike: games/volleyball-spike/
-- Badminton Smash: games/badminton-smash/
-- Table Tennis Rally: games/table-tennis-rally/
-- Bowling Strike: games/bowling-strike/
-- Golf Putt Challenge: games/golf-putt/
-- Baseball Home Run: games/baseball-home-run/
-- Cycling Sprint: games/cycling-sprint/
-- Hurdles Race: games/hurdles-race/
-- Swimming Sprint: games/swimming-sprint/
-- High Jump Challenge: games/high-jump/
-- Shot Put Challenge: games/shot-put/
-- Discus Throw: games/discus-throw/
-- Handball Shootout: games/handball-shootout/
-- Skating Slalom: games/skating-slalom/
+
+Two redesigned playable games:
+- Bubble Burst: falling-bubble shooter with aiming and matching groups (games/bubble-burst/)
+- Running Race: player versus computer sprint race (games/running-race/)
+
+New head-to-head sports games:
+- Cricket Sixer: computer bowling, player batting (games/cricket-sixer/)
+- Football Penalty Shootout: player shoots, computer goalkeeper (games/football-penalty/)

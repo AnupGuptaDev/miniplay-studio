@@ -35,6 +35,29 @@ main { color:#18243a; }
 .panel, .modal { background:#ffffff !important; color:#18243a !important; border-color:#dce4f2 !important; }
 .stat { background:#f3f6ff !important; color:#18243a !important; }
 
+
+/* Final bright-theme and typography refinement */
+html { font-size: 15px; }
+body { font-size: 15px !important; }
+.hero { padding-top: 58px; padding-bottom: 38px; gap: 34px; }
+.hero h1 { font-size: clamp(2.35rem, 5vw, 4.25rem) !important; }
+.hero p { font-size: 1rem !important; }
+.section-head h2 { font-size: clamp(1.5rem, 3.5vw, 2rem) !important; }
+.game-info h3 { font-size: 1.02rem !important; }
+.game-info p { font-size: .82rem !important; }
+.banner {
+  background: linear-gradient(110deg, #e2f4f0 0%, #e8efff 100%) !important;
+  border: 1px solid #d2e4e6 !important;
+  box-shadow: 0 12px 30px rgba(42,65,105,.08);
+}
+.banner h2 { color: #18243a !important; font-size: 1.32rem !important; }
+.banner p { color: #53627c !important; font-size: .86rem !important; }
+.banner a { font-size: .88rem !important; }
+@media(max-width:540px) {
+  .hero { padding-top: 36px; padding-bottom: 24px; }
+  .hero h1 { font-size: clamp(2.1rem, 10vw, 3rem) !important; }
+}
+
 </style>
 </head>
 <body>
@@ -58,7 +81,7 @@ main { color:#18243a; }
       <div class="section-head"><div><div class="eyebrow">The game room</div><h2>Find your next favorite</h2></div><p>Small games, big replay energy.</p></div>
       <div class="tools">
         <label class="search"><input id="search" type="search" placeholder="Search games..." aria-label="Search games"></label>
-        <div class="filters" aria-label="Filter games"><button class="filter active" data-filter="all">All games</button><button class="filter" data-filter="puzzle">Puzzle</button><button class="filter" data-filter="arcade">Arcade</button><button class="filter" data-filter="classic">Classic</button><button class="filter" data-filter="sports">Sports</button></div>
+        <div class="filters" aria-label="Filter games"><button class="filter active" data-filter="all">All games</button><button class="filter" data-filter="puzzle">Puzzle</button><button class="filter" data-filter="arcade">Arcade</button><button class="filter" data-filter="classic">Classic</button></div>
       </div>
       <div class="game-grid" id="gameGrid">
         <article class="game-card" data-category="puzzle" data-name="memory match cards brain">
@@ -86,107 +109,51 @@ main { color:#18243a; }
           <div class="game-info"><h3>Rock Paper Scissors</h3><p>A quick classic. Choose your move and challenge the CPU.</p><div class="card-bottom"><span class="meta">Classic · 1 player</span><a class="play" href="games/rock-paper-scissors/">Play game ↗</a></div></div>
         </article>
 
-        <article class="game-card" data-category="puzzle" data-name="sudoku master brain numbers logic">
-          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">🔢</span></div>
-          <div class="game-info"><h3>Sudoku Master</h3><p>Fill the grid and sharpen your number logic.</p><div class="card-bottom"><span class="meta">Brain · 1 player</span><a class="play" href="games/sudoku/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="puzzle" data-name="bubble burst color match pop">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <article class="game-card" data-category="arcade" data-name="bubble burst bubbles shooter running race">
           <div class="game-art purple"><span class="pill">PLAY NOW</span><span class="art-emoji">🫧</span></div>
-          <div class="game-info"><h3>Bubble Burst</h3><p>Pop connected colour groups and clear the board.</p><div class="card-bottom"><span class="meta">Puzzle · 1 player</span><a class="play" href="games/bubble-burst/">Play game ↗</a></div></div>
+          <div class="game-info"><h3>Bubble Burst</h3><p>Aim, shoot colourful bubbles and clear the falling rows.</p><div class="card-bottom"><span class="meta">Puzzle · 1 player</span><a class="play" href="games/bubble-burst/">Play game ↗</a></div></div>
         </article>
-        <article class="game-card" data-category="arcade" data-name="running race runner jump">
+        <article class="game-card" data-category="arcade" data-name="running race bubbles shooter running race">
           <div class="game-art orange"><span class="pill">PLAY NOW</span><span class="art-emoji">🏃</span></div>
-          <div class="game-info"><h3>Running Race</h3><p>Jump, duck and race for your longest distance.</p><div class="card-bottom"><span class="meta">Arcade · 1 player</span><a class="play" href="games/running-race/">Play game ↗</a></div></div>
+          <div class="game-info"><h3>Running Race</h3><p>Race the computer. Tap fast and reach the finish first!</p><div class="card-bottom"><span class="meta">Arcade · 2 runners</span><a class="play" href="games/running-race/">Play game ↗</a></div></div>
         </article>
-        <article class="game-card" data-category="sports" data-name="javelin challenge athletics throw">
-          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">🥇</span></div>
-          <div class="game-info"><h3>Javelin Challenge</h3><p>Set your game power and angle to chase a distance record.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/javelin-challenge/">Play game ↗</a></div></div>
+        <article class="game-card" data-category="arcade" data-name="cricket sixer sports cricket football penalty">
+          <div class="game-art orange"><span class="pill">PLAY NOW</span><span class="art-emoji">🏏</span></div>
+          <div class="game-info"><h3>Cricket Sixer</h3><p>Computer bowls — you bat and hit sixes!</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/cricket-sixer/">Play game ↗</a></div></div>
         </article>
-        <article class="game-card" data-category="sports" data-name="cricket sixer sports olympics cricket-sixer">
-          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">🏏</span></div>
-          <div class="game-info"><h3>Cricket Sixer</h3><p>Watch the ball, time your shot and score big runs.</p><div class="card-bottom"><span class="meta">Cricket · 1 player</span><a class="play" href="games/cricket-sixer/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="football penalty shootout sports olympics football-penalty">
-          <div class="game-art purple"><span class="pill">PLAY NOW</span><span class="art-emoji">⚽</span></div>
-          <div class="game-info"><h3>Football Penalty Shootout</h3><p>Pick your corner and score past the goalkeeper.</p><div class="card-bottom"><span class="meta">Football · 1 player</span><a class="play" href="games/football-penalty/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="basketball hoops sports olympics basketball-hoops">
-          <div class="game-art orange"><span class="pill">PLAY NOW</span><span class="art-emoji">🏀</span></div>
-          <div class="game-info"><h3>Basketball Hoops</h3><p>Set your aim and sink baskets for points.</p><div class="card-bottom"><span class="meta">Basketball · 1 player</span><a class="play" href="games/basketball-hoops/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="long jump challenge sports olympics long-jump">
-          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">🦘</span></div>
-          <div class="game-info"><h3>Long Jump Challenge</h3><p>Build speed and time your take-off.</p><div class="card-bottom"><span class="meta">Olympics · 1 player</span><a class="play" href="games/long-jump/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="archery target sports olympics archery-target">
-          <div class="game-art purple"><span class="pill">PLAY NOW</span><span class="art-emoji">🎯</span></div>
-          <div class="game-info"><h3>Archery Target</h3><p>Aim carefully and hit the bullseye.</p><div class="card-bottom"><span class="meta">Olympics · 1 player</span><a class="play" href="games/archery-target/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="tennis rally sports olympics tennis-rally">
-          <div class="game-art orange"><span class="pill">PLAY NOW</span><span class="art-emoji">🎾</span></div>
-          <div class="game-info"><h3>Tennis Rally</h3><p>React quickly and keep the rally alive.</p><div class="card-bottom"><span class="meta">Tennis · 1 player</span><a class="play" href="games/tennis-rally/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="volleyball spike sports olympics mini game">
-          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">🏐</span></div>
-          <div class="game-info"><h3>Volleyball Spike</h3><p>Time your jump and spike the ball past the block.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/volleyball-spike/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="badminton smash sports olympics mini game">
-          <div class="game-art purple"><span class="pill">PLAY NOW</span><span class="art-emoji">🏸</span></div>
-          <div class="game-info"><h3>Badminton Smash</h3><p>Return the shuttle and keep your badminton rally alive.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/badminton-smash/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="table tennis rally sports olympics mini game">
-          <div class="game-art orange"><span class="pill">PLAY NOW</span><span class="art-emoji">🏓</span></div>
-          <div class="game-info"><h3>Table Tennis Rally</h3><p>React fast and return every ping-pong shot.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/table-tennis-rally/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="bowling strike sports olympics mini game">
-          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">🎳</span></div>
-          <div class="game-info"><h3>Bowling Strike</h3><p>Choose your aim and knock down the pins.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/bowling-strike/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="golf putt challenge sports olympics mini game">
-          <div class="game-art purple"><span class="pill">PLAY NOW</span><span class="art-emoji">⛳</span></div>
-          <div class="game-info"><h3>Golf Putt Challenge</h3><p>Set your putting power and sink the ball.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/golf-putt/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="baseball home run sports olympics mini game">
-          <div class="game-art orange"><span class="pill">PLAY NOW</span><span class="art-emoji">⚾</span></div>
-          <div class="game-info"><h3>Baseball Home Run</h3><p>Time your swing and send the ball out of the park.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/baseball-home-run/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="cycling sprint sports olympics mini game">
-          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">🚴</span></div>
-          <div class="game-info"><h3>Cycling Sprint</h3><p>Pedal quickly and race to the finish line.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/cycling-sprint/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="hurdles race sports olympics mini game">
-          <div class="game-art purple"><span class="pill">PLAY NOW</span><span class="art-emoji">🏃</span></div>
-          <div class="game-info"><h3>Hurdles Race</h3><p>Jump over hurdles and race to the finish.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/hurdles-race/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="swimming sprint sports olympics mini game">
-          <div class="game-art orange"><span class="pill">PLAY NOW</span><span class="art-emoji">🏊</span></div>
-          <div class="game-info"><h3>Swimming Sprint</h3><p>Swim fast and dodge the lane markers.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/swimming-sprint/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="high jump challenge sports olympics mini game">
-          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">🤸</span></div>
-          <div class="game-info"><h3>High Jump Challenge</h3><p>Time your take-off and clear the high-jump bar.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/high-jump/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="shot put challenge sports olympics mini game">
-          <div class="game-art purple"><span class="pill">PLAY NOW</span><span class="art-emoji">🥇</span></div>
-          <div class="game-info"><h3>Shot Put Challenge</h3><p>Set your power and angle to throw for distance.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/shot-put/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="discus throw sports olympics mini game">
-          <div class="game-art orange"><span class="pill">PLAY NOW</span><span class="art-emoji">🥏</span></div>
-          <div class="game-info"><h3>Discus Throw</h3><p>Launch the discus and chase your longest distance.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/discus-throw/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="handball shootout sports olympics mini game">
-          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">🤾</span></div>
-          <div class="game-info"><h3>Handball Shootout</h3><p>Aim at the goal and beat the goalkeeper.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/handball-shootout/">Play game ↗</a></div></div>
-        </article>
-        <article class="game-card" data-category="sports" data-name="skating slalom sports olympics mini game">
-          <div class="game-art purple"><span class="pill">PLAY NOW</span><span class="art-emoji">⛸️</span></div>
-          <div class="game-info"><h3>Skating Slalom</h3><p>Switch lanes and weave through the slalom gates.</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/skating-slalom/">Play game ↗</a></div></div>
+        <article class="game-card" data-category="arcade" data-name="football penalty shootout sports cricket football penalty">
+          <div class="game-art blue"><span class="pill">PLAY NOW</span><span class="art-emoji">⚽</span></div>
+          <div class="game-info"><h3>Football Penalty Shootout</h3><p>You shoot penalties. The computer goalkeeper tries to save!</p><div class="card-bottom"><span class="meta">Sports · 1 player</span><a class="play" href="games/football-penalty/">Play game ↗</a></div></div>
         </article>
       </div>
       <div class="empty" id="empty">No games found. Try another search or category.</div>
     </section>
     <section>
-      <div class="banner"><div><h2>Got five minutes?</h2><p>Choose from brain teasers, arcade challenges and sports mini games.</p></div><a class="btn btn-primary" href="games/memory-match/">Play Memory Match →</a></div>
+      <div class="banner"><div><h2>Got five minutes?</h2><p>Choose from puzzles, arcade challenges and classic mini games.</p></div><a class="btn btn-primary" href="games/memory-match/">Play Memory Match →</a></div>
     </section>
     <section id="about">
       <div class="section-head"><div><div class="eyebrow">Why MiniPlay</div><h2>Made for the little breaks</h2></div></div>

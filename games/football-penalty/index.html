@@ -1,20 +1,48 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Play football penalty shootout game online for free at MiniPlay Studio.">
-<title>Football Penalty Shootout — MiniPlay Studio</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Take penalty shots against a computer goalkeeper in Football Penalty Shootout."><title>Football Penalty Shootout — MiniPlay Studio</title>
 <style>
-:root{color-scheme:light;--bg:#f3f6ff;--panel:#fff;--ink:#18243a;--muted:#63718a;--accent:#087f70;--gold:#f0a43a;--line:#dce4f2}
-*{box-sizing:border-box}body{margin:0;padding:8px 14px;background:radial-gradient(circle at 50% -10%,#dce8ff 0,#f3f6ff 58%);font:16px/1.5 system-ui,sans-serif;color:var(--ink)}
-main{width:min(760px,100%);margin:auto}.back{display:inline-block;margin:0 0 6px;color:var(--muted);text-decoration:none}header{text-align:center;margin:0 0 9px}.brand{font-size:.68rem;letter-spacing:.18em;color:var(--accent);font-weight:850}h1{font-size:clamp(1.75rem,4vw,2.45rem);margin:3px 0}.sub{color:var(--muted);margin:0;font-size:.9rem}
-.panel,.how-to{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 12px 30px #2a41691a}.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}.stat{background:#f3f6ff;border:1px solid var(--line);padding:5px 10px;border-radius:10px;font-size:.85rem}.stat b{display:block;font-size:1.05rem}button,select{font:inherit;border:0;border-radius:10px;padding:9px 13px;background:#eaf0ff;color:var(--ink);cursor:pointer}button.primary{background:var(--accent);color:#fff}button:focus-visible{outline:3px solid #f0a43a;outline-offset:2px}
-.stage{max-width:650px;margin:auto;min-height:230px;border-radius:14px;background:linear-gradient(180deg,#d9efff,#f0f8ff 65%,#a8d99c 65%);border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px;text-align:center}
-.big{font-size:clamp(3rem,12vw,5.5rem);line-height:1.1}.stage p{margin:0;color:#53627c}.actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.message{min-height:24px;text-align:center;color:var(--muted);margin:8px 0 0}
-.how-to{margin:12px auto 0}.how-to h2{font-size:1.05rem;margin:0 0 6px}.how-to ol{margin:0;padding-left:21px;color:#53627c;font-size:.9rem}.how-to li{margin:2px 0}.how-to p{margin:6px 0 0;color:#53627c;font-size:.88rem}.how-to strong{color:var(--accent)}
-@media(max-width:520px){body{padding:7px 9px}.stage{min-height:210px;padding:14px}}
+:root{color-scheme:light;--ink:#18243a;--muted:#63718a;--accent:#087f70;--line:#dce4f2}*{box-sizing:border-box}
+body{margin:0;padding:8px 14px;background:radial-gradient(circle at 50% -10%,#dce8ff 0,#f3f6ff 58%);font:15px/1.5 system-ui,sans-serif;color:var(--ink)}
+main{width:min(760px,100%);margin:auto}.back{display:inline-block;margin:0 0 6px;color:var(--muted);text-decoration:none}header{text-align:center;margin:0 0 9px}.brand{font-size:.68rem;letter-spacing:.18em;color:var(--accent);font-weight:850}h1{font-size:clamp(1.65rem,3.6vw,2.25rem);margin:3px 0}.sub{color:var(--muted);margin:0;font-size:.86rem}
+.panel,.how-to{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:0 12px 30px #2a41691a}.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}.stat{background:#f3f6ff;border:1px solid var(--line);padding:5px 10px;border-radius:10px;font-size:.8rem}.stat b{display:block;font-size:1rem}
+button{font:inherit;font-size:.92rem;border:0;border-radius:10px;padding:9px 13px;background:#eaf0ff;color:var(--ink);cursor:pointer}button.primary{background:var(--accent);color:#fff}button:disabled{opacity:.45;cursor:not-allowed}
+canvas{display:block;width:min(100%,640px);height:auto;margin:auto;border:1px solid var(--line);border-radius:14px;background:#b9dfa9;touch-action:manipulation}
+.controls{display:flex;justify-content:center;gap:10px;margin-top:10px;flex-wrap:wrap}.controls button{min-width:140px;font-weight:800}.message{min-height:24px;text-align:center;color:var(--muted);margin:8px 0 0}
+.how-to{margin:12px auto 0}.how-to h2{font-size:1.05rem;margin:0 0 6px}.how-to ol{margin:0;padding-left:21px;color:#53627c;font-size:.86rem}.how-to li{margin:2px 0}.how-to p{margin:6px 0 0;color:#53627c;font-size:.86rem}.how-to strong{color:var(--accent)}
 </style></head><body><main>
-<a class="back" href="../../">← Back to MiniPlay Studio</a><header><div class="brand">MINIPLAY STUDIO</div><h1>Football Penalty Shootout</h1><p class="sub">Pick your corner and score past the goalkeeper.</p></header>
-<section class="panel"><div class="bar"><div class="stat">Score <b id="score">0</b></div><div class="stat">Best <b id="best">0</b></div><button class="primary" id="restart">Start / Restart</button></div>
-<div class="stage"><div class="big" id="goal">🥅</div><p>Choose where to aim your shot.</p><div class="actions"><button data-dir="Left">↖ Left</button><button data-dir="Center">↑ Center</button><button data-dir="Right">↗ Right</button></div></div>
-<p class="message" id="message">Press Start, then choose a direction to shoot.</p></section>
-<section class="how-to"><h2>How to Play Football Penalty Shootout</h2><ol><li>Start a five-shot penalty shootout.</li><li>Choose Left, Center or Right to aim.</li><li>The goalkeeper will dive in one direction.</li><li>Score when your shot goes to a different direction from the goalkeeper.</li><li>Try to score as many goals as possible from five shots.</li></ol><p><strong>Tip:</strong> Mix up your shot directions to keep the goalkeeper guessing.</p></section>
-</main><script>let score=0,kicks=0,active=false,best=+(localStorage.footballPenaltyBest||0);const goal=document.querySelector("#goal"),msg=document.querySelector("#message");function upd(){document.querySelector("#score").textContent=score;document.querySelector("#best").textContent=best}function start(){score=0;kicks=0;active=true;goal.textContent="🥅";msg.textContent="Five penalties. Choose your shot!";upd()}document.querySelectorAll("[data-dir]").forEach(b=>b.onclick=()=>{if(!active)return;let keeper=["Left","Center","Right"][Math.floor(Math.random()*3)],shot=b.dataset.dir,scored=keeper!==shot;kicks++;if(scored)score++;goal.textContent=scored?"⚽️🥅":"🧤";msg.textContent=scored?"GOAL! Keeper went "+keeper+".":"Saved! Keeper guessed "+shot+".";upd();if(kicks===5){active=false;best=Math.max(best,score);localStorage.footballPenaltyBest=best;upd();msg.textContent="Shootout finished: "+score+" goals from 5 shots."}});document.querySelector("#restart").onclick=start;upd();</script></body></html>
+<a class="back" href="../../">← Back to MiniPlay Studio</a><header><div class="brand">MINIPLAY STUDIO</div><h1>Football Penalty Shootout</h1><p class="sub">You take the penalty. The computer goalkeeper tries to save it. Can you score?</p></header>
+<section class="panel"><div class="bar"><div class="stat">Goals <b id="score">0</b></div><div class="stat">Shot <b id="shotNo">0 / 5</b></div><div class="stat">Best <b id="best">0</b></div><button class="primary" id="start">Start shootout</button></div>
+<canvas id="game" width="640" height="390" aria-label="Football penalty game. Select a target in the goal and shoot while the computer goalkeeper dives."></canvas>
+<div class="controls"><button class="primary" id="shoot" disabled>⚽ SHOOT!</button></div><p class="message" id="message">Press Start shootout, choose a spot in the goal, then shoot. The computer goalkeeper will dive.</p></section>
+<section class="how-to"><h2>How to Play Football Penalty Shootout</h2><ol>
+<li>Press Start shootout. You get five penalty attempts.</li>
+<li>Click or tap inside the goal to choose where you want to aim. A target marker shows your shot direction.</li>
+<li>Press SHOOT! Your player kicks the ball toward the selected spot.</li>
+<li>The computer goalkeeper chooses a dive direction and tries to save your shot.</li>
+<li>Score as many goals as possible from five penalties. Your best score is saved.</li>
+</ol><p><strong>Tip:</strong> Aim for the corners, but the goalkeeper can sometimes guess your direction!</p></section>
+</main><script>
+(()=>{
+const cv=document.querySelector("#game"),ctx=cv.getContext("2d"),$=id=>document.getElementById(id);
+let score=0,shots=0,best=+(localStorage.footballPenaltyBest||0),active=false,target={x:320,y:95},ball=null,keeper={x:320,y:135},busy=false,raf=0;
+$("best").textContent=best;
+function draw(){ctx.clearRect(0,0,640,390);ctx.fillStyle="#b8dda8";ctx.fillRect(0,0,640,390);
+ctx.fillStyle="#6eb56f";ctx.fillRect(0,260,640,130);
+ctx.fillStyle="#fff";ctx.fillRect(100,35,440,190);ctx.fillStyle="#c7ebff";ctx.fillRect(108,43,424,174);
+ctx.strokeStyle="#fff";ctx.lineWidth=7;ctx.strokeRect(100,35,440,190);ctx.lineWidth=3;ctx.strokeRect(170,35,300,110);
+for(let x=115;x<535;x+=28){ctx.beginPath();ctx.moveTo(x,38);ctx.lineTo(x,220);ctx.strokeStyle="#ffffff99";ctx.lineWidth=1;ctx.stroke()}for(let y=55;y<220;y+=25){ctx.beginPath();ctx.moveTo(103,y);ctx.lineTo(537,y);ctx.stroke()}
+ // keeper computer
+ ctx.fillStyle="#f3b23f";ctx.beginPath();ctx.arc(keeper.x,keeper.y-22,16,0,Math.PI*2);ctx.fill();ctx.fillStyle="#e4a52d";ctx.fillRect(keeper.x-15,keeper.y-5,30,35);ctx.strokeStyle="#273c5a";ctx.lineWidth=9;ctx.beginPath();ctx.moveTo(keeper.x-10,keeper.y+28);ctx.lineTo(keeper.x-20,keeper.y+58);ctx.moveTo(keeper.x+10,keeper.y+28);ctx.lineTo(keeper.x+20,keeper.y+58);ctx.stroke();ctx.strokeStyle="#f3b23f";ctx.lineWidth=9;ctx.beginPath();ctx.moveTo(keeper.x-10,keeper.y+2);ctx.lineTo(keeper.x-31,keeper.y+15);ctx.moveTo(keeper.x+10,keeper.y+2);ctx.lineTo(keeper.x+31,keeper.y+15);ctx.stroke();
+ // penalty taker
+ ctx.fillStyle="#087f70";ctx.beginPath();ctx.arc(320,315,16,0,Math.PI*2);ctx.fill();ctx.fillRect(307,331,26,35);ctx.strokeStyle="#087f70";ctx.lineWidth=8;ctx.beginPath();ctx.moveTo(312,363);ctx.lineTo(296,383);ctx.moveTo(328,363);ctx.lineTo(344,383);ctx.stroke();
+ if(target&&!busy){ctx.strokeStyle="#f04444";ctx.lineWidth=3;ctx.beginPath();ctx.arc(target.x,target.y,12,0,Math.PI*2);ctx.moveTo(target.x-18,target.y);ctx.lineTo(target.x+18,target.y);ctx.moveTo(target.x,target.y-18);ctx.lineTo(target.x,target.y+18);ctx.stroke()}
+ if(ball){ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();ctx.strokeStyle="#263b56";ctx.lineWidth=2;ctx.stroke();ctx.fillStyle="#263b56";ctx.font="bold 12px system-ui";ctx.textAlign="center";ctx.fillText("⬟",ball.x,ball.y+4)}
+ ctx.fillStyle="#263b56";ctx.font="bold 13px system-ui";ctx.textAlign="left";ctx.fillText("COMPUTER GOALKEEPER",15,20);ctx.fillText("YOU",295,385);
+}
+function stats(){$("score").textContent=score;$("shotNo").textContent=shots+" / 5";$("best").textContent=best}
+function start(){cancelAnimationFrame(raf);score=0;shots=0;active=true;busy=false;ball=null;keeper.x=320;target={x:320,y:95};$("shoot").disabled=false;$("message").textContent="Choose your target in the goal, then press SHOOT!";stats();draw()}
+cv.addEventListener("pointerdown",e=>{if(!active||busy)return;let r=cv.getBoundingClientRect(),x=(e.clientX-r.left)*640/r.width,y=(e.clientY-r.top)*390/r.height;if(x>=108&&x<=532&&y>=43&&y<=217){target={x,y};draw();$("message").textContent="Target selected. Press SHOOT! The computer keeper is ready."}});
+function shoot(){if(!active||busy)return;busy=true;$("shoot").disabled=true;let choices=[{x:170,y:85},{x:320,y:70},{x:470,y:85},{x:145,y:180},{x:495,y:180}];let predicted=choices.reduce((a,b)=>Math.hypot(b.x-target.x,b.y-target.y)<Math.hypot(a.x-target.x,a.y-target.y)?b:a,choices[0]);let keeperChoice=Math.random()<.7?predicted:choices[Math.floor(Math.random()*choices.length)];let saved=Math.hypot(keeperChoice.x-target.x,keeperChoice.y-target.y)<105;let start={x:320,y:350},end={x:target.x,y:target.y};let t=0;ball={x:start.x,y:start.y,r:9};let kstart=keeper.x,kend=keeperChoice.x;function animate(){t=Math.min(1,t+.055);ball.x=start.x+(end.x-start.x)*t;ball.y=start.y+(end.y-start.y)*t;keeper.x=kstart+(kend-kstart)*Math.min(1,t*1.4);draw();if(t<1){raf=requestAnimationFrame(animate)}else{shots++;if(!saved)score++;$("message").textContent=saved?"SAVED! The computer goalkeeper stopped your penalty.":"GOAL! You beat the computer goalkeeper!";stats();ball=null;busy=false;if(shots>=5){active=false;best=Math.max(best,score);localStorage.footballPenaltyBest=best;stats();$("shoot").disabled=true;$("message").textContent="Shootout finished! You scored "+score+" out of 5 penalties."}else{$("shoot").disabled=false;target={x:320,y:95};draw()}}}animate()}
+$("start").onclick=start;$("shoot").onclick=shoot;stats();draw();
+})();
+</script></body></html>
